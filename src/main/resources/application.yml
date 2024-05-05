@@ -1,3 +1,6 @@
 spring:
   application:
     name: open-courseware
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
