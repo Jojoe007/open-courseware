@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Courses</title>
+</head>
+<body>
+<a th:href="@{/course/new}">Create Course</a>
+<ul>
+    <li th:each="course : ${ courses}">
+        <p th:text="${course.information.title}"></p>
+    </li>
+</ul>
+</body>
+</html>
