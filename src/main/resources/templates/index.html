@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="layouts/application :: layout(~{::main})">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+<main>
+    <div>Open Courseware Index</div>
+    <div th:text="${#authentication.getPrincipal()}"></div>
+</main>
+</body>
+</html>
