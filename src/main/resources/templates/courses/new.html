@@ -1,34 +1,143 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/application :: layout(~{::title}, ~{::content}, ~{::script})}">
 <head>
     <meta charset="UTF-8">
     <title>Create Course</title>
 </head>
 <body>
-<h1>Create Course</h1>
-<form th:action="@{/course}" th:object="${course}" th:method="post">
-    <label for="title">Title</label>
-    <input id="title" type="text" th:field="*{information.title}">
-    <span th:if="${#fields.hasErrors('information.title')}" th:errors="*{information.title}">Title Error</span>
+<th:block th:fragment="content">
+    <div class="container shadow mt-5 bg-light py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <form class="mb-3" action="" th:action="@{/course}" th:object="${course}" method="post">
+                    <h1>Create Course</h1>
 
-    <label for="overview">Overview</label>
-    <input id="overview" type="text" th:field="*{information.overview}">
-    <span th:if="${#fields.hasErrors('information.overview')}" th:errors="*{information.overview}">Overview Error</span>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group row">
+                                <label for="title"
+                                       class="col-lg-2 col-form-label text-lg-right text-muted">Title</label>
+                                <input type="text" class="form-control" id="title" th:field="*{information.title}"
+                                       th:errorclass="is-invalid">
+                                <span th:if="${#fields.hasErrors('information.title')}"
+                                      class="invalid-feedback"
+                                      th:errors="*{information.title}">Title Error</span>
+                            </div>
+                        </div>
+                    </div>
 
-    <label for="instructor">Instructor</label>
-    <input id="instructor" type="text" th:field="*{information.instructor}">
-    <span th:if="${#fields.hasErrors('information.instructor')}" th:errors="*{information.instructor}">Instructor Error</span>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group row">
+                                <label for="overview"
+                                       class="col-lg-2 col-form-label text-lg-right text-muted">Overview</label>
+                                <input type="text" class="form-control" id="overview" th:field="*{information.overview}"
+                                       th:errorclass="is-invalid">
+                                <span th:if="${#fields.hasErrors('information.overview')}"
+                                      class="invalid-feedback"
+                                      th:errors="*{information.overview}">Overview Error</span>
+                            </div>
+                        </div>
+                    </div>
 
-    <label for="type">Type</label>
-    <select id="type" type="select" th:field="*{type}">
-        <option th:each="type : ${types}" th:value="${type.name}" th:text="${type.name}"/>
-    </select>
-<!--    <input id="type" type="text" th:field="*{information.overview}">-->
-    <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Type Error</span>
+                    <label for="instructor">Instructor</label>
+                    <input class="form-control" id="instructor" type="text" th:field="*{information.instructor}">
+                    <span th:if="${#fields.hasErrors('information.instructor')}" th:errors="*{information.instructor}">Instructor Error</span>
 
-    <input type="submit" th:value="Create">
-</form>
+                    <label for="type">Type</label>
+                    <select id="type" type="select" th:field="*{type}">
+                        <option th:each="type : ${course.types}" th:value="${type}" th:text="${type.title}"/>
+                    </select>
+                    <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Type Error</span>
+
+                    <label for="status">Status</label>
+                    <select id="status" type="select" th:field="*{status}">
+                        <option th:each="status : ${course.statuses}" th:value="${status}" th:text="${status.name()}"/>
+                    </select>
+                    <span th:if="${#fields.hasErrors('status')}" th:errors="*{status}">Status Error</span>
+
+                    <div class="row my-5">
+                        <div class="col">
+                            <h5>Lectures</h5>
+                            <div class="table-responsive update-lectures">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th>LEC #</th>
+                                        <th>TOPIC</th>
+                                        <th>DESCRIPTION</th>
+                                        <th>
+                                            <button type="button" name="addLecture" class="btn btn-outline-success"
+                                                    data-update-lecture-url="/addLecture">
+                                                Add
+                                            </button>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="lectures">
+                                    <tr th:fragment="lectures" th:each="lecture, rowStat : ${course.lectures}">
+                                        <td th:text="${rowStat.count}">1</td>
+                                        <td>
+                                            <input type="hidden" th:field="${course.lectures[__${rowStat.index}__].id}">
+                                        </td>
+                                        <td>
+                                            <input class="form-control"
+                                                   th:field="${course.lectures[__${rowStat.index}__].topic}"
+                                                   th:errorclass="is-vinalid">
+                                            <div th:if="${#fields.hasErrors('${course.lectures[__${rowStat.index}__].topic}')}"
+                                                 th:errors="${course.lectures[__${rowStat.index}__].topic}"
+                                                 class="invalid-feedback"></div>
+                                        </td>
+
+                                        <td>
+                                            <input class="form-control"
+                                                   th:field="${course.lectures[__${rowStat.index}__].description}">
+                                            <div th:if="${#fields.hasErrors('${course.lectures[__${rowStat.index}__].description}')}"
+                                                 th:errors="${course.lectures[__${rowStat.index}__].description}"
+                                                 class="invalid-feedback"></div>
+                                        </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" name="removeLecture" th:value="${rowStat.index}"
+                                                        class="btn-outline-danger"
+                                                        data-update-lecture-url="/removeLecture">
+                                                    Remove
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</th:block>
+
+<script th:fragment="script">
+    $(document).ready(function () {
+        $('.update-lectures').on('click', 'button[data-update-lecture-url]', function () {
+            const url = $(this).data('update-lecture-url');
+
+            // adding th row index, needed when deleting a lecture.
+            const data = $('form').serializeArray();
+            const params = {};
+            params['name'] = $(this).attr('name');
+            params['value'] = $(this).val();
+            data.push(params);
+
+            // updating the lecture section
+            let x = $('#lectures').load(url, data);
+        });
+    });
+</script>
+
 </body>
 </html>

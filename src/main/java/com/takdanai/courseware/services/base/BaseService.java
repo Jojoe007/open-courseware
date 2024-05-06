@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public abstract class BaseService<R extends JpaRepository<T, Long>, T extends BaseEntity> implements BaseServiceInterface<T> {
 
-    private final R repository;
+    protected final R repository;
 
     protected BaseService(R repository) {
         this.repository = repository;

@@ -1,6 +1,7 @@
 package com.takdanai.courseware.controllers;
 
 import com.takdanai.courseware.entities.Course;
+import com.takdanai.courseware.entities.Lecture;
 import com.takdanai.courseware.services.CourseService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -28,22 +29,35 @@ public record CourseController(CourseService courseService) {
         return "courses/show";
     }
 
-    @GetMapping("/course/new")
+    @GetMapping("/course")
     public String news(Model model) {
         model.addAttribute("course", new Course());
-        model.addAttribute("types", Course.Type.values());
+
         return "courses/new";
+    }
+
+    @PostMapping(value = "/addLecture")
+    public String addLecture(Course course) {
+        course.addLecture();
+
+        return "courses/new :: lectures";
+    }
+
+    @PostMapping("/removeLecture")
+    public String removeLecture(Course course, @RequestParam("removeLecture") Integer lectureIndex) {
+        course.removeLecture(lectureIndex);
+
+        return "courses/new :: lectures";
     }
 
     @PostMapping("/course")
     public String create(@Valid Course course, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "courses/new";
+        } else {
+            //        courseService.create(course);
+            return "redirect:/courses";
         }
-
-        courseService.create(course);
-
-        return "redirect:/courses";
     }
 
 

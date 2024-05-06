@@ -4,3 +4,24 @@ spring:
   jpa:
     hibernate:
       ddl-auto: create-drop
+  sql:
+    init:
+      mode: always
+      encoding: UTF-8
+      continue-on-error: true
+      data-locations: classpath*:/sql/*.sql
+  docker:
+    compose:
+      lifecycle-management: none
+  jackson:
+    time-zone: Asia/Bangkok
+    date-format: java.text.SimpleDateFormat
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+      location: classpath*:/files
+  batch:
+    jdbc:
+      initialize-schema: always
