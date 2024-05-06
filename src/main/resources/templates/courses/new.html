@@ -46,6 +46,48 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group row">
+                                <label for="overview"
+                                       class="col-lg-2 col-form-label text-lg-right text-muted">Topics</label>
+                                <input type="text" class="form-control" id="topics" th:field="*{topics}"
+                                       th:errorclass="is-invalid">
+                                <span th:if="${#fields.hasErrors('topics')}"
+                                      class="invalid-feedback"
+                                      th:errors="*{topics}">Topics Error</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group row">
+                                <label for="overview"
+                                       class="col-lg-2 col-form-label text-lg-right text-muted">Departments</label>
+                                <input type="text" class="form-control" id="departments" th:field="*{departments}"
+                                       th:errorclass="is-invalid">
+                                <span th:if="${#fields.hasErrors('departments')}"
+                                      class="invalid-feedback"
+                                      th:errors="*{departments}">Departments Error</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group row">
+                                <label for="overview"
+                                       class="col-lg-2 col-form-label text-lg-right text-muted">Thumbnail</label>
+                                <input type="file" class="form-control" id="thumbnail" th:field="*{thumbnail}"
+                                       th:errorclass="is-invalid">
+                                <span th:if="${#fields.hasErrors('thumbnail')}"
+                                      class="invalid-feedback"
+                                      th:errors="*{thumbnail}">Thumbnail Error</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group row">
                                 <label for="type" class="col-lg-2 col-form-label text-lg-right text-muted">Type</label>
                                 <select class="form-control" id="type" type="select" th:field="*{type}"
                                         th:errorclass="is-invalid">
@@ -53,6 +95,21 @@
                                             th:text="${type.title}"/>
                                 </select>
                                 <span th:if="${#fields.hasErrors('type')}" class="invalid-feedback" th:errors="*{type}">Type Error</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group row">
+                                <label for="type" class="col-lg-2 col-form-label text-lg-right text-muted">Level</label>
+                                <select class="form-control" id="level" type="select" th:field="*{level}"
+                                        th:errorclass="is-invalid">
+                                    <option th:each="level : ${courseRequest.levels}" th:value="${level}"
+                                            th:text="${level.name()}"/>
+                                </select>
+                                <span th:if="${#fields.hasErrors('type')}" class="invalid-feedback"
+                                      th:errors="*{level}">Level Error</span>
                             </div>
                         </div>
                     </div>
@@ -80,9 +137,12 @@
                                 <table class="table">
                                     <thead>
                                     <tr>
-                                        <th>LEC #</th>
-                                        <th>TOPIC</th>
-                                        <th>DESCRIPTION</th>
+                                        <th>no.</th>
+                                        <th>Index</th>
+                                        <th>Topic</th>
+                                        <th>Summary</th>
+                                        <th>Video</th>
+                                        <th>Document</th>
                                         <th>
                                             <button type="button" name="addLecture" class="btn btn-outline-success"
                                                     data-update-lecture-url="/addLecture">
@@ -93,7 +153,9 @@
                                     </thead>
                                     <tbody id="lectures">
                                     <tr th:fragment="lectures" th:each="lecture, rowStat : ${courseRequest.lectures}">
-                                        <!-- <td th:text="${rowStat.count}">1</td>-->
+                                        <td>
+                                            <span th:field="${rowStat.count}">1</span>
+                                        </td>
                                         <td>
                                             <input type="text"
                                                    th:field="${courseRequest.lectures[__${rowStat.index}__].index}">
@@ -106,12 +168,27 @@
                                                  th:errors="${courseRequest.lectures[__${rowStat.index}__].topic}"
                                                  class="invalid-feedback"></div>
                                         </td>
-
                                         <td>
                                             <input class="form-control"
                                                    th:field="${courseRequest.lectures[__${rowStat.index}__].summary}">
                                             <div th:if="${#fields.hasErrors('${courseRequest.lectures[__${rowStat.index}__].summary}')}"
                                                  th:errors="${courseRequest.lectures[__${rowStat.index}__].summary}"
+                                                 class="invalid-feedback"></div>
+                                        </td>
+                                        <td>
+                                            <input class="form-control"
+                                                   type="file"
+                                                   th:field="${courseRequest.lectures[__${rowStat.index}__].video}">
+                                            <div th:if="${#fields.hasErrors('${courseRequest.lectures[__${rowStat.index}__].video}')}"
+                                                 th:errors="${courseRequest.lectures[__${rowStat.index}__].video}"
+                                                 class="invalid-feedback"></div>
+                                        </td>
+                                        <td>
+                                            <input class="form-control"
+                                                   type="file"
+                                                   th:field="${courseRequest.lectures[__${rowStat.index}__].document}">
+                                            <div th:if="${#fields.hasErrors('${courseRequest.lectures[__${rowStat.index}__].document}')}"
+                                                 th:errors="${courseRequest.lectures[__${rowStat.index}__].document}"
                                                  class="invalid-feedback"></div>
                                         </td>
                                         <td>

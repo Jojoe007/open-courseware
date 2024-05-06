@@ -45,7 +45,9 @@ public record CourseController(CourseService courseService) {
 
     @PostMapping(value = "/addLecture")
     public String addLecture(CourseRequest courseRequest) {
-        courseRequest.addLecture();
+        if (courseRequest.lectures.size() <= 15) {
+            courseRequest.addLecture();
+        }
 
         return "courses/new::lectures";
     }

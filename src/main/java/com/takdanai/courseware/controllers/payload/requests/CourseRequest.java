@@ -4,10 +4,10 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.takdanai.courseware.entities.Course;
 import com.takdanai.courseware.entities.Department;
-import com.takdanai.courseware.entities.Storage;
 import com.takdanai.courseware.entities.Topic;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Set;
@@ -24,7 +24,7 @@ public class CourseRequest {
 
     public Set<Department> departments = Sets.newHashSet();
 
-    public Storage.Image thumbnail;
+    public MultipartFile thumbnail;
 
     public Course.Type type;
 
