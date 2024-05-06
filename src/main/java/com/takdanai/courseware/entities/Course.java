@@ -1,11 +1,10 @@
 package com.takdanai.courseware.entities;
 
-import com.google.common.collect.Sets;
+import com.google.common.collect.Lists;
+import com.takdanai.courseware.controllers.payload.requests.CourseRequest;
 import com.takdanai.courseware.entities.base.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,14 +12,38 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class Course extends BaseEntity implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
+
+    private String title;
+
+    private String overview;
+
+    @ManyToOne
+    private Level level;
+
+    @ManyToMany
+    private Set<Topic> topics = new HashSet<>();
+
+    @ManyToMany
+    private Set<Department> departments = new HashSet<>();
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private Storage.Image thumbnail;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Student student;
 
     @Enumerated(EnumType.ORDINAL)
     private Type type;
@@ -29,13 +52,9 @@ public class Course extends BaseEntity implements Serializable {
     private Status status;
 
     @Valid
-    @Embedded
-    private Information information;
-
-    @Valid
     @JoinColumn(name = "course_id")
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Lecture> lectures = new ArrayList<>();
+    private List<Lecture> lectures = Lists.newLinkedList();
 
     public static Type[] types() {
         return Type.values();
@@ -53,32 +72,10 @@ public class Course extends BaseEntity implements Serializable {
         lectures.remove(lectureIndex.intValue());
     }
 
-    @Data
-    @Embeddable
-    public static class Information {
-        @NotBlank(message = "title can't be blank")
-        private String title;
+    public static Course formRequest(CourseRequest request) {
+        Course course = new Course();
 
-        @NotBlank(message = "description can't be blank")
-        private String description;
-
-        @Valid
-        @ManyToOne
-        private Level level;
-
-        @Valid
-        @ManyToMany
-        private Set<Topic> topics = new HashSet<>();
-
-        @Valid
-        @ManyToMany
-        private Set<Department> departments = new HashSet<>();
-
-        @OneToOne
-        private Storage.Image image;
-
-        @ManyToOne
-        private Student instructor;
+        return course;
     }
 
     public enum Type {

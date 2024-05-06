@@ -11,7 +11,7 @@
             <h1>Register</h1>
             <form th:action="@{/authentication/register}" th:object="${registerRequest}" th:method="post">
                 <label for="username">username</label>
-                <input id="username" type="text" th:field="*{username}">
+                <input id="username" type="text" autocomplete="username" th:field="*{username}">
                 <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</span>
 
                 <label for="password">password</label>
@@ -21,6 +21,29 @@
                 <label for="passwordConfirmation">password confirmation</label>
                 <input id="passwordConfirmation" type="password" th:field="*{passwordConfirmation}">
                 <span th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}">Password Confirmation Error</span>
+
+                <label for="firstName">First Name</label>
+                <input id="firstName" type="text" autocomplete="given-name" th:field="*{firstName}">
+                <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</span>
+
+                <label for="lastName">Last Name</label>
+                <input id="lastName" type="text" autocomplete="family-name" th:field="*{lastName}">
+                <span th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}">Password Confirmation Error</span>
+
+                <label for="birthday">Birthday</label>
+                <input id="birthday" type="date" autocomplete="bday" th:field="*{birthday}">
+                <span th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}">Birthday Error</span>
+
+                <label for="gender">Gender</label>
+                <select id="gender" type="select" th:field="*{gender}">
+                    <option th:each="gender : ${registerRequest.genders()}" th:value="${gender}"
+                            th:text="${gender.name()}"></option>
+                </select>
+                <span th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">Gender Error</span>
+
+                <label for="bio">Bio</label>
+                <input id="bio" type="text" th:field="*{bio}">
+                <span th:if="${#fields.hasErrors('bio')}" th:errors="*{bio}">Bio Error</span>
 
                 <input type="submit" th:value="Create">
             </form>

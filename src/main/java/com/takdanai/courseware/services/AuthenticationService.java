@@ -3,6 +3,7 @@ package com.takdanai.courseware.services;
 import com.takdanai.courseware.controllers.payload.requests.LoginRequest;
 import com.takdanai.courseware.controllers.payload.requests.RegisterRequest;
 import com.takdanai.courseware.entities.Student;
+import com.takdanai.courseware.entities.enums.Role;
 import com.takdanai.courseware.repositories.StudentRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -17,14 +18,15 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 public class AuthenticationService {
 
     private final StudentRepository studentRepository;
-
     private final AuthenticationManager authenticationManager;
-
     private final PasswordEncoder passwordEncoder;
     private final SecurityContextRepository securityContextRepository = new HttpSessionSecurityContextRepository();
     private final SecurityContextLogoutHandler securityContextLogoutHandler = new SecurityContextLogoutHandler();
@@ -54,10 +56,10 @@ public class AuthenticationService {
         }
     }
 
+    @Transactional
     public void register(RegisterRequest request) {
-        Student student = new Student();
-        student.setUsername(request.getUsername());
-        student.setPassword(passwordEncoder.encode(request.getPassword()));
+        Student student = Student.formRequest(request, passwordEncoder);
+        student.setRole(Role.ROLE_USER);
 
         studentRepository.save(student);
     }
@@ -67,7 +69,19 @@ public class AuthenticationService {
         return true;
     }
 
+    public Authentication getAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
+    }
+
+    public Optional<Student> getCurrentStudent() {
+        return findByAuthentication(getAuthentication());
+    }
+
     public boolean usernameAlreadyExist(String username) {
         return studentRepository.existsByUsername(username);
+    }
+
+    public Optional<Student> findByAuthentication(Authentication authentication) {
+        return studentRepository.findByUsername(authentication.getName());
     }
 }

@@ -1,5 +1,6 @@
 package com.takdanai.courseware.controllers;
 
+import com.takdanai.courseware.controllers.payload.requests.CourseRequest;
 import com.takdanai.courseware.entities.Course;
 import com.takdanai.courseware.exceptions.CourseNotFoundException;
 import com.takdanai.courseware.services.CourseService;
@@ -41,49 +42,26 @@ public record CourseController(CourseService courseService) {
     }
 
     @PostMapping(value = "/addLecture")
-    public String addLecture(Course course) {
-        course.addLecture();
+    public String addLecture(CourseRequest courseRequest) {
+        courseRequest.addLecture();
 
-        return "courses/new :: lectures";
+        return "courses/new::lectures";
     }
 
     @PostMapping("/removeLecture")
-    public String removeLecture(Course course, @RequestParam("removeLecture") Integer lectureIndex) {
-        course.removeLecture(lectureIndex);
+    public String removeLecture(CourseRequest courseRequest, @RequestParam("removeLecture") Integer lectureIndex) {
+        courseRequest.removeLecture(lectureIndex);
 
-        return "courses/new :: lectures";
+        return "courses/new::lectures";
     }
 
     @PostMapping("/course")
-    public String create(@Valid Course course, BindingResult bindingResult) {
+    public String create(@Valid CourseRequest courseRequest, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "courses/new";
         }
 
-        courseService.create(course);
+        courseService.create(courseRequest);
         return "redirect:/courses";
     }
-
-
-//    @GetMapping("/courses")
-//    public ResponseEntity<?> index() {
-//        var courses = courseService.index();
-//        return ResponseEntity.ok().body(courses);
-//    }
-//
-//    @GetMapping("/course/{id}")
-//    public ResponseEntity<?> show(@PathVariable Long id) {
-//        var course = courseService.show(id);
-//        if (course.isPresent()) {
-//            return ResponseEntity.ok().body(course.get());
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
-//
-//    @PostMapping("/course")
-//    public ResponseEntity<?> create(@RequestBody Course body) {
-//        var course = courseService.create(body);
-//        return ResponseEntity.ok(course);
-//    }
 }

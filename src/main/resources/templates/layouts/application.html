@@ -19,8 +19,10 @@
 </div>
 <!-- TODO: Footer Positions-->
 
-<th:block th:if="${errorMessage}">
-    <div th:text="${errorMessage}"></div>
+<th:block th:fragment="toast">
+    <th:block th:if="${errorMessage}">
+        <div th:text="${errorMessage}"></div>
+    </th:block>
 </th:block>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"

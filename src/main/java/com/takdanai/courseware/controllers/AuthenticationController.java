@@ -6,16 +6,17 @@ import com.takdanai.courseware.services.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@Log4j2
 @Controller
 @RequestMapping("/authentication")
 public record AuthenticationController(AuthenticationService authenticationService) {
@@ -59,13 +60,6 @@ public record AuthenticationController(AuthenticationService authenticationServi
         if (bindingResult.hasErrors()) {
             return "authentication/register/new";
         }
-
-        if (authenticationService().usernameAlreadyExist(registerRequest.getUsername())) {
-            bindingResult.addError(new FieldError("usernameError", "username", "Username Already Exists"));
-
-            return "authentication/register/new";
-        }
-
         authenticationService.register(registerRequest);
 
         return "redirect:/authentication/login";

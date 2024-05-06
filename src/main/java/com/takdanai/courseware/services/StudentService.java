@@ -47,10 +47,7 @@ public class StudentService extends BaseService<StudentRepository, Student> impl
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Student student = repository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Student Not Found"));
-
-
-        return student;
+        return repository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(String.format("%s not found.", username)));
     }
 }
