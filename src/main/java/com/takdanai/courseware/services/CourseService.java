@@ -80,8 +80,16 @@ public class CourseService extends BaseService<CourseRepository, Course> {
         course.getLectures().add(new Lecture());
     }
 
+    public void addLecture(CourseRequest request) {
+        request.addLecture();
+    }
+
     public void removeLecture(Course course, int lectureIndex) {
         course.getLectures().remove(lectureIndex);
+    }
+
+    public void removeLecture(CourseRequest request, int lectureIndex) {
+        request.addLecture();
     }
 
     public List<Department> allDepartments() {

@@ -20,26 +20,11 @@
                             <div class="form-group row">
                                 <label for="title"
                                        class="col-lg-2 col-form-label text-lg-right text-muted">Title</label>
-                                <input type="text" class="form-control" id="title" th:field="*{information.title}"
+                                <input type="text" class="form-control" id="title" th:field="*{title}"
                                        th:errorclass="is-invalid">
-                                <span th:if="${#fields.hasErrors('information.title')}"
+                                <span th:if="${#fields.hasErrors('title')}"
                                       class="invalid-feedback"
-                                      th:errors="*{information.title}">Title Error</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group row">
-                                <label for="description"
-                                       class="col-lg-2 col-form-label text-lg-right text-muted">Description</label>
-                                <input type="text" class="form-control" id="description"
-                                       th:field="*{information.description}"
-                                       th:errorclass="is-invalid">
-                                <span th:if="${#fields.hasErrors('information.description')}"
-                                      class="invalid-feedback"
-                                      th:errors="*{information.description}">Overview Error</span>
+                                      th:errors="*{title}">Title Error</span>
                             </div>
                         </div>
                     </div>
