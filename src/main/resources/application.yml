@@ -25,3 +25,7 @@ spring:
   batch:
     jdbc:
       initialize-schema: always
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true

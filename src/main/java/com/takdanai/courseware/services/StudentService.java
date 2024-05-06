@@ -7,12 +7,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class StudentService extends BaseService<StudentRepository, Student> implements UserDetailsService {
+
     protected StudentService(StudentRepository repository) {
         super(repository);
     }
@@ -43,7 +45,12 @@ public class StudentService extends BaseService<StudentRepository, Student> impl
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+        Student student = repository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Student Not Found"));
+
+
+        return student;
     }
 }

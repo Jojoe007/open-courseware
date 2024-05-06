@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layouts/application :: layout(~{::title}, ~{::content}, ~{::script})}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:href="${course.id}">Title</title>
 </head>
 <body>
+<th:block th:fragment="content">
+    <div class="row">
+        <h3 th:text="${course.information.title}"></h3>
+    </div>
+</th:block>
+<script>
 
+</script>
 </body>
 </html>

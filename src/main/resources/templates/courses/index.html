@@ -7,7 +7,7 @@
     <title>Courses</title>
 </head>
 <body>
-<a th:href="@{/course/new}">Create Course</a>
+<a th:href="@{/course}">Create Course</a>
 <ul>
     <li th:each="course : ${ courses}">
         <p th:text="${course.information.title}"></p>

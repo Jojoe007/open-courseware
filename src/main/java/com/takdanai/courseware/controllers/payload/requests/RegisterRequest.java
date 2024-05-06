@@ -1,11 +1,14 @@
 package com.takdanai.courseware.controllers.payload.requests;
 
+import com.takdanai.courseware.controllers.payload.base.PasswordConfirmationRequestInterface;
+import com.takdanai.courseware.controllers.payload.validators.PasswordConfirmation;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Data
-public class RegisterRequest {
+@PasswordConfirmation
+public class RegisterRequest extends PasswordConfirmationRequestInterface {
     @NotBlank(message = "Username cannot be blank")
     private String username;
 

@@ -1,7 +1,7 @@
 package com.takdanai.courseware.controllers;
 
 import com.takdanai.courseware.entities.Course;
-import com.takdanai.courseware.entities.Lecture;
+import com.takdanai.courseware.exceptions.CourseNotFoundException;
 import com.takdanai.courseware.services.CourseService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,11 @@ public record CourseController(CourseService courseService) {
 
     @GetMapping("/course/{id}")
     public String show(@PathVariable Long id, Model model) {
-        model.addAttribute("course", courseService.findById(id));
+        Course course = courseService.findById(id).orElseThrow(
+                () -> new CourseNotFoundException("Course")
+        );
+
+        model.addAttribute("course", course);
         return "courses/show";
     }
 
@@ -54,10 +58,10 @@ public record CourseController(CourseService courseService) {
     public String create(@Valid Course course, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "courses/new";
-        } else {
-            //        courseService.create(course);
-            return "redirect:/courses";
         }
+
+        courseService.create(course);
+        return "redirect:/courses";
     }
 
 

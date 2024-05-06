@@ -14,8 +14,14 @@
 </head>
 <body>
 <!-- TODO: Header Positions-->
-<div th:replace="${content}"></div>
+<div class="container">
+    <div th:replace="${content}"></div>
+</div>
 <!-- TODO: Footer Positions-->
+
+<th:block th:if="${errorMessage}">
+    <div th:text="${errorMessage}"></div>
+</th:block>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="

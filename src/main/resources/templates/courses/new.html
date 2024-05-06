@@ -32,32 +32,47 @@
                     <div class="row">
                         <div class="col">
                             <div class="form-group row">
-                                <label for="overview"
-                                       class="col-lg-2 col-form-label text-lg-right text-muted">Overview</label>
-                                <input type="text" class="form-control" id="overview" th:field="*{information.overview}"
+                                <label for="description"
+                                       class="col-lg-2 col-form-label text-lg-right text-muted">Description</label>
+                                <input type="text" class="form-control" id="description"
+                                       th:field="*{information.description}"
                                        th:errorclass="is-invalid">
-                                <span th:if="${#fields.hasErrors('information.overview')}"
+                                <span th:if="${#fields.hasErrors('information.description')}"
                                       class="invalid-feedback"
-                                      th:errors="*{information.overview}">Overview Error</span>
+                                      th:errors="*{information.description}">Overview Error</span>
                             </div>
                         </div>
                     </div>
 
-                    <label for="instructor">Instructor</label>
-                    <input class="form-control" id="instructor" type="text" th:field="*{information.instructor}">
-                    <span th:if="${#fields.hasErrors('information.instructor')}" th:errors="*{information.instructor}">Instructor Error</span>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group row">
+                                <label for="type" class="col-lg-2 col-form-label text-lg-right text-muted">Type</label>
+                                <select class="form-control" id="type" type="select" th:field="*{type}"
+                                        th:errorclass="is-invalid">
+                                    <option th:each="type : ${course.types}" th:value="${type}"
+                                            th:text="${type.title}"/>
+                                </select>
+                                <span th:if="${#fields.hasErrors('type')}" class="invalid-feedback" th:errors="*{type}">Type Error</span>
+                            </div>
+                        </div>
+                    </div>
 
-                    <label for="type">Type</label>
-                    <select id="type" type="select" th:field="*{type}">
-                        <option th:each="type : ${course.types}" th:value="${type}" th:text="${type.title}"/>
-                    </select>
-                    <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}">Type Error</span>
-
-                    <label for="status">Status</label>
-                    <select id="status" type="select" th:field="*{status}">
-                        <option th:each="status : ${course.statuses}" th:value="${status}" th:text="${status.name()}"/>
-                    </select>
-                    <span th:if="${#fields.hasErrors('status')}" th:errors="*{status}">Status Error</span>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group row">
+                                <label for="status"
+                                       class="col-lg-2 col-form-label text-lg-right text-muted">Status</label>
+                                <select class="form-control" id="status" type="select" th:field="*{status}"
+                                        th:errorclass="is-invalid">
+                                    <option th:each="status : ${course.statuses}" th:value="${status}"
+                                            th:text="${status.name()}"/>
+                                </select>
+                                <span th:if="${#fields.hasErrors('status')}" class="invalid-feedback"
+                                      th:errors="*{status}">Status Error</span>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="row my-5">
                         <div class="col">

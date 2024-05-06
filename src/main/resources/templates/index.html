@@ -2,15 +2,25 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      th:replace="layouts/application :: layout(~{::main})">
+      th:replace="~{layouts/application :: layout(~{::title}, ~{::content}, ~{::script})}">
 <head>
     <meta charset="UTF-8">
     <title>Hello</title>
 </head>
 <body>
-<main>
+<th:block th:fragment="content">
     <div>Open Courseware Index</div>
-    <div th:text="${#authentication.getPrincipal()}"></div>
-</main>
+    <th:block th:if="${#authentication.authenticated}">
+        <div>isAuthenticate</div>
+        <div th:text="${#authentication.principal}"></div>
+        <a th:href="@{/course}">Create Course</a>
+        <form action="" th:action="@{/authentication/logout}" th:method="delete">
+            <button type="submit">Logout</button>
+        </form>
+    </th:block>
+</th:block>
+<script>
+
+</script>
 </body>
 </html>
