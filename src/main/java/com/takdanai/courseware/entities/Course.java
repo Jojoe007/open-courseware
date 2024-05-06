@@ -30,9 +30,6 @@ public class Course extends BaseEntity implements Serializable {
 
     private String overview;
 
-    @ManyToOne
-    private Level level;
-
     @ManyToMany
     private Set<Topic> topics = new HashSet<>();
 
@@ -47,6 +44,9 @@ public class Course extends BaseEntity implements Serializable {
 
     @Enumerated(EnumType.ORDINAL)
     private Type type;
+
+    @Enumerated(EnumType.ORDINAL)
+    private Level level;
 
     @Enumerated(EnumType.ORDINAL)
     private Status status;
@@ -76,6 +76,12 @@ public class Course extends BaseEntity implements Serializable {
         Course course = new Course();
 
         return course;
+    }
+
+    public enum Level {
+        UNDERGRADUATE,
+        GRADUATE,
+        HIGH_SCHOOL;
     }
 
     public enum Type {

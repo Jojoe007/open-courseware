@@ -2,8 +2,12 @@ package com.takdanai.courseware.services;
 
 import com.takdanai.courseware.controllers.payload.requests.CourseRequest;
 import com.takdanai.courseware.entities.Course;
+import com.takdanai.courseware.entities.Department;
 import com.takdanai.courseware.entities.Lecture;
+import com.takdanai.courseware.entities.Topic;
 import com.takdanai.courseware.repositories.CourseRepository;
+import com.takdanai.courseware.repositories.DepartmentRepository;
+import com.takdanai.courseware.repositories.TopicRepository;
 import com.takdanai.courseware.services.base.BaseService;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
@@ -18,10 +22,16 @@ public class CourseService extends BaseService<CourseRepository, Course> {
 
     private final LectureService lectureService;
 
-    protected CourseService(CourseRepository repository, AuthenticationService authenticationService, LectureService lectureService) {
+    private final DepartmentRepository departmentRepository;
+
+    private final TopicRepository topicRepository;
+
+    protected CourseService(CourseRepository repository, AuthenticationService authenticationService, LectureService lectureService, DepartmentRepository departmentRepository, TopicRepository topicRepository) {
         super(repository);
         this.authenticationService = authenticationService;
         this.lectureService = lectureService;
+        this.departmentRepository = departmentRepository;
+        this.topicRepository = topicRepository;
     }
 
     @Override
@@ -46,11 +56,11 @@ public class CourseService extends BaseService<CourseRepository, Course> {
         Course course = new Course();
         course.setTitle(request.title);
         course.setOverview(request.description);
-        course.setLevel(request.level);
         course.setTopics(request.topics);
         course.setDepartments(request.departments);
         course.setThumbnail(request.thumbnail);
         course.setType(request.type);
+        course.setLevel(request.level);
         course.setStatus(request.status);
 
         return super.create(course);
@@ -72,5 +82,13 @@ public class CourseService extends BaseService<CourseRepository, Course> {
 
     public void removeLecture(Course course, int lectureIndex) {
         course.getLectures().remove(lectureIndex);
+    }
+
+    public List<Department> allDepartments() {
+        return departmentRepository.findAll();
+    }
+
+    public List<Topic> allTopic() {
+        return topicRepository.findAll();
     }
 }

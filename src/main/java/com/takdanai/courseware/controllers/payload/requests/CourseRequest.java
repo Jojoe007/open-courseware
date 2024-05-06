@@ -2,7 +2,10 @@ package com.takdanai.courseware.controllers.payload.requests;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import com.takdanai.courseware.entities.*;
+import com.takdanai.courseware.entities.Course;
+import com.takdanai.courseware.entities.Department;
+import com.takdanai.courseware.entities.Storage;
+import com.takdanai.courseware.entities.Topic;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
@@ -17,8 +20,6 @@ public class CourseRequest {
     @NotBlank(message = "overview can't be blank")
     public String description;
 
-    public Level level;
-
     public Set<Topic> topics = Sets.newHashSet();
 
     public Set<Department> departments = Sets.newHashSet();
@@ -26,6 +27,8 @@ public class CourseRequest {
     public Storage.Image thumbnail;
 
     public Course.Type type;
+
+    public Course.Level level;
 
     public Course.Status status;
 
