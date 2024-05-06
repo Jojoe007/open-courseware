@@ -18,7 +18,7 @@ public class CourseRequest {
     public String title;
 
     @NotBlank(message = "overview can't be blank")
-    public String description;
+    public String overview;
 
     public Set<Topic> topics = Sets.newHashSet();
 
@@ -33,6 +33,18 @@ public class CourseRequest {
     public Course.Status status;
 
     public List<LectureRequest> lectures = Lists.newLinkedList();
+
+    public Course.Type[] types() {
+        return Course.Type.values();
+    }
+
+    public Course.Level[] levels() {
+        return Course.Level.values();
+    }
+
+    public Course.Status[] statuses() {
+        return Course.Status.values();
+    }
 
     public void addLecture() {
         lectures.add(new LectureRequest());

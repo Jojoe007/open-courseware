@@ -72,6 +72,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(registry -> {
                     registry.requestMatchers("/authentication/**").permitAll();
                     registry.requestMatchers("/", "/courses", "/course/").permitAll();
+                    registry.requestMatchers("/addLecture", "/removeLecture").permitAll();
                     registry.anyRequest().authenticated();
                 });
 

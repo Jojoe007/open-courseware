@@ -55,7 +55,7 @@ public class CourseService extends BaseService<CourseRepository, Course> {
 
         Course course = new Course();
         course.setTitle(request.title);
-        course.setOverview(request.description);
+        course.setOverview(request.overview);
         course.setTopics(request.topics);
         course.setDepartments(request.departments);
         course.setThumbnail(request.thumbnail);

@@ -36,7 +36,7 @@ public record CourseController(CourseService courseService) {
 
     @GetMapping("/course")
     public String news(Model model) {
-        model.addAttribute("course", new Course());
+        model.addAttribute("courseRequest", new CourseRequest());
         model.addAttribute("topics", courseService.allTopic());
         model.addAttribute("departments", courseService.allDepartments());
 
