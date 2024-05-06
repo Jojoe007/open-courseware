@@ -1,0 +1,4 @@
+### Storages ###
+/storages/*/*
+!/storages/.keep
+!/storages/*/.keep
