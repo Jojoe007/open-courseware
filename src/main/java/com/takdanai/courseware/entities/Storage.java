@@ -14,6 +14,11 @@ import lombok.NoArgsConstructor;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Storage extends BaseEntity {
 
+    private String fileName;
+    private String path;
+    private String type;
+    private Student uploadedBy;
+
     @Entity
     @DiscriminatorValue("DOCUMENT")
     public static class Document extends Storage {

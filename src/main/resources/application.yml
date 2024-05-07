@@ -19,9 +19,9 @@ spring:
   servlet:
     multipart:
       enabled: true
-      max-file-size: 20MB
-      max-request-size: 20MB
-      location: classpath*:/files
+      max-file-size: 200MB
+      max-request-size: 200MB
+      location: classpath*:/storages
   batch:
     jdbc:
       initialize-schema: always
