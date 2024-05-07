@@ -10,9 +10,9 @@ public interface BaseServiceInterface<T extends BaseEntity> {
 
     Optional<T> findById(Long id);
 
-    T create(T request);
+    T create(T entity);
 
-    Optional<T> update(Long id, T request);
+    Optional<T> update(Long id, T entity);
 
     Optional<T> delete(Long id);
 }

@@ -25,15 +25,15 @@ public abstract class BaseService<R extends JpaRepository<T, Long>, T extends Ba
     }
 
     @Override
-    public T create(T request) {
-        return repository.save(request);
+    public T create(T entity) {
+        return repository.save(entity);
     }
 
     @Override
-    public Optional<T> update(Long id, T request) {
+    public Optional<T> update(Long id, T entity) {
         boolean exist = repository.existsById(id);
         if (exist) {
-            return Optional.of(repository.save(request));
+            return Optional.of(repository.save(entity));
         }
 
         return Optional.empty();
