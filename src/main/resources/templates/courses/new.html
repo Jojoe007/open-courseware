@@ -1,239 +1,243 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layouts/application :: layout(~{::title}, ~{::content}, ~{::script})}">
-<head>
-    <meta charset="UTF-8">
+<template lang="en"
+          xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:th="http://www.thymeleaf.org"
+          th:replace="~{layouts/application :: layout(~{::title}, ~{::content}, ~{::script})}">
+
     <title>Create Course</title>
-</head>
-<body>
-<th:block th:fragment="content">
-    <div class="container shadow mt-5 bg-light py-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <form class="mb-3" action="" th:action="@{/course}" th:object="${courseRequest}" method="post">
-                    <h1>Create Course</h1>
 
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group row">
-                                <label for="title"
-                                       class="col-lg-2 col-form-label text-lg-right text-muted">Title</label>
-                                <input type="text" class="form-control" id="title" th:field="*{title}"
-                                       th:errorclass="is-invalid">
-                                <span th:if="${#fields.hasErrors('title')}"
-                                      class="invalid-feedback"
-                                      th:errors="*{title}">Title Error</span>
+    <th:block th:fragment="content">
+        <div class="container shadow mt-5 bg-light py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <form class="mb-3" id="course-form" action="" th:action="@{/course}" th:object="${courseRequest}"
+                          method="post" enctype="multipart/form-data">
+                        <h1>Create Course</h1>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group row">
+                                    <label for="title"
+                                           class="col-lg-2 col-form-label text-lg-right text-muted">Title</label>
+                                    <input type="text" class="form-control" id="title" th:field="*{title}"
+                                           th:errorclass="is-invalid">
+                                    <span th:if="${#fields.hasErrors('title')}"
+                                          class="invalid-feedback"
+                                          th:errors="*{title}">Title Error</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group row">
-                                <label for="overview"
-                                       class="col-lg-2 col-form-label text-lg-right text-muted">Overview</label>
-                                <input type="text" class="form-control" id="overview" th:field="*{overview}"
-                                       th:errorclass="is-invalid">
-                                <span th:if="${#fields.hasErrors('overview')}"
-                                      class="invalid-feedback"
-                                      th:errors="*{overview}">Overview Error</span>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group row">
+                                    <label for="overview"
+                                           class="col-lg-2 col-form-label text-lg-right text-muted">Overview</label>
+                                    <input type="text" class="form-control" id="overview" th:field="*{overview}"
+                                           th:errorclass="is-invalid">
+                                    <span th:if="${#fields.hasErrors('overview')}"
+                                          class="invalid-feedback"
+                                          th:errors="*{overview}">Overview Error</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group row">
-                                <label for="overview"
-                                       class="col-lg-2 col-form-label text-lg-right text-muted">Topics</label>
-                                <input type="text" class="form-control" id="topics" th:field="*{topics}"
-                                       th:errorclass="is-invalid">
-                                <span th:if="${#fields.hasErrors('topics')}"
-                                      class="invalid-feedback"
-                                      th:errors="*{topics}">Topics Error</span>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group row">
+                                    <label for="topic"
+                                           class="col-lg-2 col-form-label text-lg-right text-muted">Topics</label>
+                                    <select class="form-control" id="topic" type="select" th:field="*{type}"
+                                            th:errorclass="is-invalid">
+                                        <option th:each="topic : ${topics}" th:value="${type}"
+                                                th:text="${topic.title}"/>
+                                    </select>
+                                    <span th:if="${#fields.hasErrors('topics')}"
+                                          class="invalid-feedback"
+                                          th:errors="*{topics}">Topics Error</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group row">
-                                <label for="overview"
-                                       class="col-lg-2 col-form-label text-lg-right text-muted">Departments</label>
-                                <input type="text" class="form-control" id="departments" th:field="*{departments}"
-                                       th:errorclass="is-invalid">
-                                <span th:if="${#fields.hasErrors('departments')}"
-                                      class="invalid-feedback"
-                                      th:errors="*{departments}">Departments Error</span>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group row">
+                                    <label for="overview"
+                                           class="col-lg-2 col-form-label text-lg-right text-muted">Departments</label>
+                                    <input type="text" class="form-control" id="departments" th:field="*{departments}"
+                                           th:errorclass="is-invalid">
+                                    <span th:if="${#fields.hasErrors('departments')}"
+                                          class="invalid-feedback"
+                                          th:errors="*{departments}">Departments Error</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group row">
-                                <label for="overview"
-                                       class="col-lg-2 col-form-label text-lg-right text-muted">Thumbnail</label>
-                                <input type="file" class="form-control" id="thumbnail" th:field="*{thumbnail}"
-                                       th:errorclass="is-invalid">
-                                <span th:if="${#fields.hasErrors('thumbnail')}"
-                                      class="invalid-feedback"
-                                      th:errors="*{thumbnail}">Thumbnail Error</span>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group row">
+                                    <label for="overview"
+                                           class="col-lg-2 col-form-label text-lg-right text-muted">Thumbnail</label>
+                                    <input type="file" accept="image/*" class="form-control" id="thumbnail"
+                                           th:field="*{thumbnail}"
+                                           th:errorclass="is-invalid">
+                                    <span th:if="${#fields.hasErrors('thumbnail')}"
+                                          class="invalid-feedback"
+                                          th:errors="*{thumbnail}">Thumbnail Error</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group row">
-                                <label for="type" class="col-lg-2 col-form-label text-lg-right text-muted">Type</label>
-                                <select class="form-control" id="type" type="select" th:field="*{type}"
-                                        th:errorclass="is-invalid">
-                                    <option th:each="type : ${courseRequest.types}" th:value="${type}"
-                                            th:text="${type.title}"/>
-                                </select>
-                                <span th:if="${#fields.hasErrors('type')}" class="invalid-feedback" th:errors="*{type}">Type Error</span>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group row">
+                                    <label for="type"
+                                           class="col-lg-2 col-form-label text-lg-right text-muted">Type</label>
+                                    <select class="form-control" id="type" type="select" th:field="*{type}"
+                                            th:errorclass="is-invalid">
+                                        <option th:each="type : ${courseRequest.types}" th:value="${type}"
+                                                th:text="${type.title}"/>
+                                    </select>
+                                    <span th:if="${#fields.hasErrors('type')}" class="invalid-feedback"
+                                          th:errors="*{type}">Type Error</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group row">
-                                <label for="type" class="col-lg-2 col-form-label text-lg-right text-muted">Level</label>
-                                <select class="form-control" id="level" type="select" th:field="*{level}"
-                                        th:errorclass="is-invalid">
-                                    <option th:each="level : ${courseRequest.levels}" th:value="${level}"
-                                            th:text="${level.name()}"/>
-                                </select>
-                                <span th:if="${#fields.hasErrors('type')}" class="invalid-feedback"
-                                      th:errors="*{level}">Level Error</span>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group row">
+                                    <label for="type"
+                                           class="col-lg-2 col-form-label text-lg-right text-muted">Level</label>
+                                    <select class="form-control" id="level" type="select" th:field="*{level}"
+                                            th:errorclass="is-invalid">
+                                        <option th:each="level : ${courseRequest.levels}" th:value="${level}"
+                                                th:text="${level.title}"/>
+                                    </select>
+                                    <span th:if="${#fields.hasErrors('type')}" class="invalid-feedback"
+                                          th:errors="*{level}">Level Error</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group row">
-                                <label for="status"
-                                       class="col-lg-2 col-form-label text-lg-right text-muted">Status</label>
-                                <select class="form-control" id="status" type="select" th:field="*{status}"
-                                        th:errorclass="is-invalid">
-                                    <option th:each="status : ${courseRequest.statuses}" th:value="${status}"
-                                            th:text="${status.name()}"/>
-                                </select>
-                                <span th:if="${#fields.hasErrors('status')}" class="invalid-feedback"
-                                      th:errors="*{status}">Status Error</span>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group row">
+                                    <label for="status"
+                                           class="col-lg-2 col-form-label text-lg-right text-muted">Status</label>
+                                    <select class="form-control" id="status" type="select" th:field="*{status}"
+                                            th:errorclass="is-invalid">
+                                        <option th:each="status : ${courseRequest.statuses}" th:value="${status}"
+                                                th:text="${status.title}"/>
+                                    </select>
+                                    <span th:if="${#fields.hasErrors('status')}" class="invalid-feedback"
+                                          th:errors="*{status}">Status Error</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row my-5">
-                        <div class="col">
-                            <h5>Lectures</h5>
-                            <div class="table-responsive update-lectures">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>no.</th>
-                                        <th>Index</th>
-                                        <th>Topic</th>
-                                        <th>Summary</th>
-                                        <th>Video</th>
-                                        <th>Document</th>
-                                        <th>
-                                            <button type="button" name="addLecture" class="btn btn-outline-success"
-                                                    data-update-lecture-url="/addLecture">
-                                                Add
-                                            </button>
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="lectures">
-                                    <tr th:fragment="lectures" th:each="lecture, rowStat : ${courseRequest.lectures}">
-                                        <td>
-                                            <span th:field="${rowStat.count}">1</span>
-                                        </td>
-                                        <td>
-                                            <input type="text"
-                                                   th:field="${courseRequest.lectures[__${rowStat.index}__].index}">
-                                        </td>
-                                        <td>
-                                            <input class="form-control"
-                                                   th:field="${courseRequest.lectures[__${rowStat.index}__].topic}"
-                                                   th:errorclass="is-vinalid">
-                                            <div th:if="${#fields.hasErrors('${courseRequest.lectures[__${rowStat.index}__].topic}')}"
-                                                 th:errors="${courseRequest.lectures[__${rowStat.index}__].topic}"
-                                                 class="invalid-feedback"></div>
-                                        </td>
-                                        <td>
-                                            <input class="form-control"
-                                                   th:field="${courseRequest.lectures[__${rowStat.index}__].summary}">
-                                            <div th:if="${#fields.hasErrors('${courseRequest.lectures[__${rowStat.index}__].summary}')}"
-                                                 th:errors="${courseRequest.lectures[__${rowStat.index}__].summary}"
-                                                 class="invalid-feedback"></div>
-                                        </td>
-                                        <td>
-                                            <input class="form-control"
-                                                   type="file"
-                                                   th:field="${courseRequest.lectures[__${rowStat.index}__].video}">
-                                            <div th:if="${#fields.hasErrors('${courseRequest.lectures[__${rowStat.index}__].video}')}"
-                                                 th:errors="${courseRequest.lectures[__${rowStat.index}__].video}"
-                                                 class="invalid-feedback"></div>
-                                        </td>
-                                        <td>
-                                            <input class="form-control"
-                                                   type="file"
-                                                   th:field="${courseRequest.lectures[__${rowStat.index}__].document}">
-                                            <div th:if="${#fields.hasErrors('${courseRequest.lectures[__${rowStat.index}__].document}')}"
-                                                 th:errors="${courseRequest.lectures[__${rowStat.index}__].document}"
-                                                 class="invalid-feedback"></div>
-                                        </td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <button type="button" name="removeLecture" th:value="${rowStat.index}"
-                                                        class="btn-outline-danger"
-                                                        data-update-lecture-url="/removeLecture">
-                                                    Remove
+                        <div class="row my-5">
+                            <div class="col">
+                                <h5>Lectures</h5>
+                                <div class="table-responsive update-lectures">
+                                    <table class="table">
+                                        <thead>
+                                        <tr>
+                                            <th>no.</th>
+                                            <th>Index</th>
+                                            <th>Topic</th>
+                                            <th>Summary</th>
+                                            <th>Video</th>
+                                            <th>Document</th>
+                                            <th>
+                                                <button type="button" name="addLecture" class="btn btn-outline-success"
+                                                        data-update-lecture-url="/addLecture">
+                                                    Add
                                                 </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="lectures">
+                                        <tr th:fragment="lectures"
+                                            th:each="lecture, rowStat : ${courseRequest.lectures}">
+                                            <td>
+                                                <span th:field="${rowStat.count}">1</span>
+                                            </td>
+                                            <td>
+                                                <input type="text"
+                                                       th:field="${courseRequest.lectures[__${rowStat.index}__].index}">
+                                            </td>
+                                            <td>
+                                                <input class="form-control"
+                                                       th:field="${courseRequest.lectures[__${rowStat.index}__].topic}"
+                                                       th:errorclass="is-vinalid">
+                                                <div th:if="${#fields.hasErrors('${courseRequest.lectures[__${rowStat.index}__].topic}')}"
+                                                     th:errors="${courseRequest.lectures[__${rowStat.index}__].topic}"
+                                                     class="invalid-feedback"></div>
+                                            </td>
+                                            <td>
+                                                <input class="form-control"
+                                                       th:field="${courseRequest.lectures[__${rowStat.index}__].summary}">
+                                                <div th:if="${#fields.hasErrors('${courseRequest.lectures[__${rowStat.index}__].summary}')}"
+                                                     th:errors="${courseRequest.lectures[__${rowStat.index}__].summary}"
+                                                     class="invalid-feedback"></div>
+                                            </td>
+                                            <td>
+                                                <input class="form-control"
+                                                       type="file"
+                                                       accept="video/*"
+                                                       th:field="${courseRequest.lectures[__${rowStat.index}__].video}">
+                                                <div th:if="${#fields.hasErrors('${courseRequest.lectures[__${rowStat.index}__].video}')}"
+                                                     th:errors="${courseRequest.lectures[__${rowStat.index}__].video}"
+                                                     class="invalid-feedback"></div>
+                                            </td>
+                                            <td>
+                                                <input class="form-control"
+                                                       type="file"
+                                                       accept="application/pdf"
+                                                       th:field="${courseRequest.lectures[__${rowStat.index}__].document}">
+                                                <div th:if="${#fields.hasErrors('${courseRequest.lectures[__${rowStat.index}__].document}')}"
+                                                     th:errors="${courseRequest.lectures[__${rowStat.index}__].document}"
+                                                     class="invalid-feedback"></div>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" name="removeLecture"
+                                                            th:value="${rowStat.index}"
+                                                            class="btn-outline-danger"
+                                                            data-update-lecture-url="/removeLecture">
+                                                        Remove
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Create</button>
-                </form>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-</th:block>
+    </th:block>
 
-<script th:fragment="script">
-    $(document).ready(function () {
-        $('.update-lectures').on('click', 'button[data-update-lecture-url]', function () {
-            const url = $(this).data('update-lecture-url');
+    <script th:fragment="script">
+        $(document).ready(function () {
+            $('.update-lectures').on('click', 'button[data-update-lecture-url]', function () {
+                const url = $(this).data('update-lecture-url');
 
-            // adding th row index, needed when deleting a lecture.
-            const data = $('form').serializeArray();
-            const params = {};
-            params['name'] = $(this).attr('name');
-            params['value'] = $(this).val();
-            data.push(params);
+                // adding th row index, needed when deleting a lecture.
+                const data = $('#course-form').serializeArray();
+                const params = {};
+                params['name'] = $(this).attr('name');
+                params['value'] = $(this).val();
+                data.push(params);
 
-            // updating the lecture section
-            $('#lectures').load(url, data);
-
-            console.log(data)
-            console.log(params)
-            console.log(url)
+                // updating the lecture section
+                $('#lectures').load(url, data);
+            });
         });
-    });
-</script>
-
-</body>
-</html>
+    </script>
+</template>
