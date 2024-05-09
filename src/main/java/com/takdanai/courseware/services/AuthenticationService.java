@@ -75,7 +75,7 @@ public class AuthenticationService {
             throw new StorageImageException("unable to store avatar.");
         }
 
-        student.setUsername(request.username);
+        student.setUsername(request.username.toLowerCase());
         student.setPassword(passwordEncoder.encode(request.getPassword()));
         student.setFirstName(request.firstName);
         student.setLastName(request.lastName);
