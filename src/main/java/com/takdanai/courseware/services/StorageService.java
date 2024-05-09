@@ -128,29 +128,34 @@ public class StorageService extends BaseService<StorageRepository, Storage> {
 
     private Pair<String, String> saveFileToLocalStorage(MultipartFile file, String type) throws IOException {
         String newFileName = generateFileName(file.getOriginalFilename());
-        Path filePath;
+        String storeFilePath = "/storages";
+        Path realFilePath;
 
         switch (type) {
             case "image": {
-                filePath = Paths.get(IMAGE_STORAGE_DIRECTORY, newFileName);
+                realFilePath = Paths.get(IMAGE_STORAGE_DIRECTORY, newFileName);
+                storeFilePath += "/images/" + newFileName;
             }
 
             case "video": {
-                filePath = Paths.get(VIDEO_STORAGE_DIRECTORY, newFileName);
+                realFilePath = Paths.get(VIDEO_STORAGE_DIRECTORY, newFileName);
+                storeFilePath += "/videos/" + newFileName;
             }
 
             case "document": {
-                filePath = Paths.get(DOCUMENT_STORAGE_DIRECTORY, newFileName);
+                realFilePath = Paths.get(DOCUMENT_STORAGE_DIRECTORY, newFileName);
+                storeFilePath += "/documents/" + newFileName;
             }
 
             case null, default: {
-                filePath = Paths.get(STORAGE_DIRECTORY, newFileName);
+                realFilePath = Paths.get(STORAGE_DIRECTORY, newFileName);
+                storeFilePath += newFileName;
             }
         }
 
-        Files.write(filePath, file.getBytes());
+        Files.write(realFilePath, file.getBytes());
 
-        return Pair.of(newFileName, filePath.toString());
+        return Pair.of(newFileName, storeFilePath);
     }
 
     private String generateFileName(String oldName) {
