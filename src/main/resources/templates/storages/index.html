@@ -1,10 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Storages</title>
-</head>
-<body>
+<template lang="en"
+          xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:th="http://www.thymeleaf.org"
+          th:replace="~{layouts/application :: layout(~{::title}, ~{::content}, ~{::script})}">
 
-</body>
-</html>
+    <title>Storage</title>
+
+    <th:block th:fragment="content">
+        <h1>Storage Lists</h1>
+        <ul>
+            <li th:each="storage : ${storages}">
+                <p th:text="${storage.id}"></p>
+                <a th:href="@{'/storages/images/' + ${storage.fileName}}" th:text="${storage.fileName}"></a>
+                <img th:src="@{'/storages/images/' + ${storage.fileName}}" alt="" width="200">
+            </li>
+        </ul>
+    </th:block>
+
+    <script>
+
+    </script>
+
+</template>

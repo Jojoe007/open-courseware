@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<template lang="en"
+          xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:th="http://www.thymeleaf.org"
+          th:replace="~{layouts/application :: layout(~{::title}, ~{::content}, ~{::script})}">
+
+    <title th:text="${subTopic.title}">Topic ID</title>
+
+    <th:block th:fragment="content">
+        <a href="/topics">Back</a>
+        <h1 th:text="${subTopic.title}"></h1>
+        <th:block th:each="course : ${subTopic.course}">
+            <a th:href="@{'/course/' + ${course.id}}"><strong th:text="${course.title}"></strong></a>
+        </th:block>
+    </th:block>
+
+    <script>
+
+    </script>
+
+</template>

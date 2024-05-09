@@ -1,0 +1,18 @@
+<template lang="en"
+          xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:th="http://www.thymeleaf.org"
+          th:replace="layouts/application :: layout(~{::title},~{::main}, ~{::script})">
+    <title>Topics</title>
+    <main>
+        <div class="row py-5">
+            <th:block th:each="topic : ${topics}">
+                <div>
+                    <a th:href="@{'/topic/' + ${topic.id}}">
+                        <h3 th:text="${topic.title}"></h3>
+                    </a>
+                </div>
+            </th:block>
+        </div>
+    </main>
+    <script></script>
+</template>

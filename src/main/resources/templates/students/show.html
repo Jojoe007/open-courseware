@@ -1,0 +1,90 @@
+<template lang="en"
+          xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:th="http://www.thymeleaf.org"
+          th:replace="layouts/application :: layout(~{::title},~{::main}, ~{::script})">
+    <title th:text="${student.fullName}">Student Name</title>
+
+    <main>
+        <div class="pt-5">
+            <div class="ps-5 pt-5">
+                <div class="row">
+                    <div class="col-3 ps-5">
+                        <!-- https://dummyimage.com/200x200 -->
+                        <img class="rounded-circle" th:if="${student.avatar}"
+                             th:src="@{'/storages/images/' + ${student.avatar.fileName}}" alt="avatar" width="200"
+                             height="200">
+                    </div>
+                    <div class="col-4">
+                        <div class="pt-5 ">
+                            <h3 th:text="${student.fullName()}"></h3>
+                        </div>
+                        <div class="pt-2">
+                            <h5 th:text="${student.bio}"></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <div class="pt-5 row">
+                        <div class="col-4">
+                            <a href="/video">
+                                <div class="card" style="width: 25rem;">
+                                    <img class="card-img-top" src="https://dummyimage.com/400x180">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <img class="rounded-circle" src="https://dummyimage.com/50x50">
+                                            </div>
+                                            <div class="col">
+                                                <h5 class="card-text">Spring boot + thymeleaf.</h5>
+                                                <h6 class="card-text">peter</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-4">
+                            <a href="/video">
+                                <div class="card" style="width: 25rem;">
+                                    <img class="card-img-top" src="https://dummyimage.com/400x180">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <img class="rounded-circle" src="https://dummyimage.com/50x50">
+                                            </div>
+                                            <div class="col">
+                                                <h5 class="card-text">Spring boot + thymeleaf.</h5>
+                                                <h6 class="card-text">peter</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-4">
+                            <a href="/video">
+                                <div class="card" style="width: 25rem;">
+                                    <img class="card-img-top" src="https://dummyimage.com/400x180">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <img class="rounded-circle" src="https://dummyimage.com/50x50">
+                                            </div>
+                                            <div class="col">
+                                                <h5 class="card-text">Spring boot + thymeleaf.</h5>
+                                                <h6 class="card-text">peter</h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+
+    </script>
+</template>

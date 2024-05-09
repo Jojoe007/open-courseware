@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="layouts/application :: layout(~{::title},~{::main}, ~{::script})">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+<main>
+    <header th:replace="fragments/header.html :: header"></header>
+    <div class="pt-5">
+        <div class="pt-5 ps-5">
+            <div>
+                <h3>Follower</h3>
+            </div>
+        </div>
+    </div>
+</main>
+<script>
+
+</script>
+</body>
+</html>
