@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="layouts/application :: layout(~{::title},~{::main}, ~{::script})">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+<body>
+<main>
+
+    <header th:replace="fragments/header.html :: header"></header>
+
+    <div class="pt-5">
+        <div class="ps-5 pt-5">
+            <div>
+                <h3>Upload</h3>
+            </div>
+            <div class="pt-3">
+                <h5>Video Name</h5>
+            </div>
+            <div class="pt-3">
+                <form class="d-flex w-100 " role="name">
+                    <input class="form-control me-2" type="name" placeholder="Name" aria-label="Name">
+                </form>
+            </div>
+            <div class="pt-3">
+                <h5>Description</h5>
+            </div>
+            <div class="pt-3">
+                <form class="d-flex w-100 " role="description">
+                    <input class="form-control me-2" type="description" placeholder="Description"
+                           aria-label="Description">
+                </form>
+            </div>
+            <div class="pt-3">
+                <h5>Cataecory</h5>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    Cataecory
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Technology</a></li>
+                    <li><a class="dropdown-item" href="#">Math</a></li>
+                    <li><a class="dropdown-item" href="#">Science</a></li>
+                    <li><a class="dropdown-item" href="#">English</a></li>
+                </ul>
+            </div>
+            <div class="pt-3">
+                <label class="form-label" for="customFile">Choose Image</label>
+                <input type="file" class="form-control d-flex w-100" id="customFile"/>
+            </div>
+            <div class="pt-3">
+                <label for="formFileMultiple" class="form-label">Choose Video</label>
+                <input class="form-control d-flex w-100 " type="file" id="formFileMultiple" multiple/>
+            </div>
+            <div class="pt-3">
+                <button type="button" class="btn btn-primary  w-100">Confirm</button>
+            </div>
+            <div class="pt-3">
+                <button type="button" class="btn btn-danger w-100">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+</main>
+<script>
+
+</script>
+</body>
+</html>
