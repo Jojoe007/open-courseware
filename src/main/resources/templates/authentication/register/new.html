@@ -7,48 +7,59 @@
     <title>Create Course</title>
 
     <main>
-        <div class="">
+        <div class="pt-3">
             <h1>Register</h1>
-            <form th:action="@{/authentication/register}" th:object="${registerRequest}" th:method="post">
-                <label for="username">username</label>
-                <input id="username" type="text" autocomplete="username" th:field="*{username}">
+            <form th:action="@{/authentication/register}" th:object="${registerRequest}" th:method="post"
+                  enctype="multipart/form-data">
+                <label for="username" class="fs-6 pt-2">Username</label>
+                <input id="username" type="text" autocomplete="username" class="form-control mt-2"
+                       th:field="*{username}">
                 <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</span>
 
-                <label for="password">password</label>
-                <input id="password" type="password" th:field="*{password}">
+                <label for="password" class="fs-6 pt-2">Password</label>
+                <input id="password" type="password" class="form-control mt-2" th:field="*{password}">
                 <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Overview Error</span>
 
-                <label for="passwordConfirmation">password confirmation</label>
-                <input id="passwordConfirmation" type="password" th:field="*{passwordConfirmation}">
+                <label for="passwordConfirmation" class="fs-6 pt-2">Password Confirmation</label>
+                <input id="passwordConfirmation" type="password" class="form-control mt-2"
+                       th:field="*{passwordConfirmation}">
                 <span th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}">Password Confirmation Error</span>
 
-                <label for="firstName">First Name</label>
-                <input id="firstName" type="text" autocomplete="given-name" th:field="*{firstName}">
+                <label for="firstName" class="fs-6 pt-2">First Name</label>
+                <input id="firstName" type="text" autocomplete="given-name" class="form-control mt-2"
+                       th:field="*{firstName}">
                 <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</span>
 
-                <label for="lastName">Last Name</label>
-                <input id="lastName" type="text" autocomplete="family-name" th:field="*{lastName}">
-                <span th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}">Password Confirmation Error</span>
+                <label for="lastName" class="fs-6 pt-2">Last Name</label>
+                <input id="lastName" type="text" autocomplete="family-name" class="form-control mt-2"
+                       th:field="*{lastName}">
+                <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name Error</span>
 
-                <label for="birthday">Birthday</label>
-                <input id="birthday" type="date" autocomplete="bday" th:field="*{birthday}">
+                <label for="birthday" class="fs-6 pt-2">Birthday</label>
+                <input id="birthday" type="date" autocomplete="bday" class="form-control mt-2" th:field="*{birthday}">
                 <span th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}">Birthday Error</span>
 
-                <label for="gender">Gender</label>
-                <select id="gender" type="select" th:field="*{gender}">
+                <label for="avatar" class="fs-6 pt-2">Avatar</label>
+                <input id="avatar" type="file" accept="image/*" class="form-control mt-2" th:field="*{avatar}">
+                <span th:if="${#fields.hasErrors('avatar')}" th:errors="*{avatar}">Avatar Error</span>
+
+                <label for="gender" class="fs-6 pt-2">Gender</label>
+                <select id="gender" type="select" class="form-control mt-2" th:field="*{gender}">
                     <option th:each="gender : ${registerRequest.genders()}" th:value="${gender}"
                             th:text="${gender.name()}"></option>
                 </select>
                 <span th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">Gender Error</span>
 
-                <label for="bio">Bio</label>
-                <input id="bio" type="text" th:field="*{bio}">
+                <label for="bio" class="fs-6 pt-2">Bio</label>
+                <input id="bio" type="text" class="form-control mt-2" th:field="*{bio}">
                 <span th:if="${#fields.hasErrors('bio')}" th:errors="*{bio}">Bio Error</span>
 
-                <input type="submit" th:value="Create">
+                <input type="submit" class="form-control mt-4 bg-primary text-light" th:value="Sign-Up">
             </form>
+            <div class="text-center pt-2">
+                <a class="pt-2" th:href="@{/authentication/login}">Login</a>
+            </div>
 
-            <a th:href="@{/authentication/login}">Login</a>
         </div>
     </main>
 
@@ -57,3 +68,67 @@
     </script>
 
 </template>
+
+<!--<!DOCTYPE html>-->
+<!--<template lang="en"-->
+<!--          xmlns="http://www.w3.org/1999/xhtml"-->
+<!--          xmlns:th="http://www.thymeleaf.org"-->
+<!--          th:replace="~{layouts/application :: layout(~{::title}, ~{::main}, ~{::script})}">-->
+
+<!--    <title>Create Course</title>-->
+
+<!--    <main>-->
+<!--        <div class="">-->
+<!--            <h1>Register</h1>-->
+<!--            <form th:action="@{/authentication/register}" th:object="${registerRequest}" th:method="post" enctype="multipart/form-data">-->
+<!--                <label for="username">username</label>-->
+<!--                <input id="username" type="text" autocomplete="username" th:field="*{username}">-->
+<!--                <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</span>-->
+
+<!--                <label for="password">password</label>-->
+<!--                <input id="password" type="password" th:field="*{password}">-->
+<!--                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Overview Error</span>-->
+
+<!--                <label for="passwordConfirmation">password confirmation</label>-->
+<!--                <input id="passwordConfirmation" type="password" th:field="*{passwordConfirmation}">-->
+<!--                <span th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}">Password Confirmation Error</span>-->
+
+<!--                <label for="firstName">First Name</label>-->
+<!--                <input id="firstName" type="text" autocomplete="given-name" th:field="*{firstName}">-->
+<!--                <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</span>-->
+
+<!--                <label for="lastName">Last Name</label>-->
+<!--                <input id="lastName" type="text" autocomplete="family-name" th:field="*{lastName}">-->
+<!--                <span th:if="${#fields.hasErrors('passwordConfirmation')}" th:errors="*{passwordConfirmation}">Password Confirmation Error</span>-->
+
+<!--                <label for="birthday">Birthday</label>-->
+<!--                <input id="birthday" type="date" autocomplete="bday" th:field="*{birthday}">-->
+<!--                <span th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}">Birthday Error</span>-->
+
+<!--                <label for="avatar">Avatar</label>-->
+<!--                <input id="avatar" type="file" th:field="*{avatar}">-->
+<!--                <span th:if="${#fields.hasErrors('avatar')}" th:errors="*{avatar}">Avatar Error</span>-->
+
+<!--                <label for="gender">Gender</label>-->
+<!--                <select id="gender" type="select" th:field="*{gender}">-->
+<!--                    <option th:each="gender : ${registerRequest.genders()}" th:value="${gender}"-->
+<!--                            th:text="${gender.name()}"></option>-->
+<!--                </select>-->
+<!--                <span th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}">Gender Error</span>-->
+
+<!--                <label for="bio">Bio</label>-->
+<!--                <input id="bio" type="text" th:field="*{bio}">-->
+<!--                <span th:if="${#fields.hasErrors('bio')}" th:errors="*{bio}">Bio Error</span>-->
+
+<!--                <input type="submit" th:value="Create">-->
+<!--            </form>-->
+
+<!--            <a th:href="@{/authentication/login}">Login</a>-->
+<!--        </div>-->
+<!--    </main>-->
+
+<!--    <script>-->
+
+<!--    </script>-->
+
+<!--</template>-->

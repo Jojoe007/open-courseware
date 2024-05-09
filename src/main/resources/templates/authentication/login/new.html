@@ -5,22 +5,55 @@
       th:replace="~{layouts/application :: layout(~{::title}, ~{::content}, ~{::script})}">
 <title>Login</title>
 <th:block th:fragment="content">
-    <h1>Login</h1>
+    <div class="pt-3">
+        <h1>Login</h1>
+    </div>
+
     <form th:action="@{/authentication/login}" th:object="${loginRequest}" th:method="post">
-        <label for="username">username</label>
-        <input id="username" type="text" th:field="*{username}">
+        <label for="username" class="fs-6">Username</label>
+        <input id="username" type="text" class="form-control" th:field="*{username}">
         <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</span>
 
-        <label for="password">password</label>
-        <input id="password" type="password" th:field="*{password}">
+        <label for="password" class="fs-6">Password</label>
+        <input id="password" type="password" class="form-control" th:field="*{password}">
         <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Overview Error</span>
 
-        <input type="submit" th:value="Create">
+        <input type="submit" class="form-control mt-3 bg-primary text-light" th:value="Sign-In">
     </form>
+    <div class="text-center pt-2">
+        <a class="pt-3" th:href="@{/authentication/register}">Register</a>
+    </div>
 
-    <a th:href="@{/authentication/register}">Register</a>
+
 </th:block>
 <script>
 
 </script>
 </html>
+
+<!--<!DOCTYPE html>-->
+<!--<html lang="en"-->
+<!--      xmlns="http://www.w3.org/1999/xhtml"-->
+<!--      xmlns:th="http://www.thymeleaf.org"-->
+<!--      th:replace="~{layouts/application :: layout(~{::title}, ~{::content}, ~{::script})}">-->
+<!--<title>Login</title>-->
+<!--<th:block th:fragment="content">-->
+<!--    <h1>Login</h1>-->
+<!--    <form th:action="@{/authentication/login}" th:object="${loginRequest}" th:method="post">-->
+<!--        <label for="username">username</label>-->
+<!--        <input id="username" type="text" th:field="*{username}">-->
+<!--        <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</span>-->
+
+<!--        <label for="password">password</label>-->
+<!--        <input id="password" type="password" th:field="*{password}">-->
+<!--        <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Overview Error</span>-->
+
+<!--        <input type="submit" th:value="Create">-->
+<!--    </form>-->
+
+<!--    <a th:href="@{/authentication/register}">Register</a>-->
+<!--</th:block>-->
+<!--<script>-->
+
+<!--</script>-->
+<!--</html>-->
