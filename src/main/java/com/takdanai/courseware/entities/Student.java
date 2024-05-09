@@ -1,6 +1,5 @@
 package com.takdanai.courseware.entities;
 
-import com.takdanai.courseware.controllers.payload.requests.RegisterRequest;
 import com.takdanai.courseware.entities.base.BaseEntity;
 import com.takdanai.courseware.entities.enums.Gender;
 import com.takdanai.courseware.entities.enums.Role;
@@ -12,7 +11,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -57,21 +55,12 @@ public class Student extends BaseEntity implements UserDetails, Serializable {
         return String.format("%s %s", this.firstName, this.lastName);
     }
 
-    public static List<Gender> genders() {
-        return List.of(Gender.values());
+    public String getPath() {
+        return String.format("/student/%d", this.getId());
     }
 
-    public static Student formRequest(RegisterRequest request, PasswordEncoder encoder) {
-        Student student = new Student();
-        student.username = request.getUsername();
-        student.password = encoder.encode(request.getPassword());
-        student.firstName = request.getFirstName();
-        student.lastName = request.getLastName();
-        student.birthday = request.getBirthday();
-        student.gender = request.getGender();
-        student.bio = request.getBio();
-
-        return student;
+    public static List<Gender> genders() {
+        return List.of(Gender.values());
     }
 
     @Override
