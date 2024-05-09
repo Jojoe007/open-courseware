@@ -1,5 +1,6 @@
 package com.takdanai.courseware.controllers;
 
+import com.takdanai.courseware.controllers.payload.requests.CommentRequest;
 import com.takdanai.courseware.controllers.payload.requests.CourseRequest;
 import com.takdanai.courseware.entities.Course;
 import com.takdanai.courseware.exceptions.CourseNotFoundException;
@@ -24,20 +25,21 @@ public record CourseController(CourseService courseService) {
         return "courses/index";
     }
 
-    @GetMapping("/course/{id}")
+    @GetMapping("/course/{id:\\d+}")
     public String show(@PathVariable Long id, Model model) {
         Course course = courseService.findById(id).orElseThrow(
-                () -> new CourseNotFoundException("Course")
+                () -> new CourseNotFoundException(String.format("Course %d not found.", id))
         );
 
         model.addAttribute("course", course);
+        model.addAttribute("commentRequest", new CommentRequest());
         return "courses/show";
     }
 
     @GetMapping("/course")
     public String news(Model model) {
         model.addAttribute("courseRequest", new CourseRequest());
-        model.addAttribute("topics", courseService.allTopic());
+        model.addAttribute("topics", courseService.allTopics());
         model.addAttribute("departments", courseService.allDepartments());
 
         return "courses/new";
@@ -67,5 +69,12 @@ public record CourseController(CourseService courseService) {
 
         courseService.create(courseRequest);
         return "redirect:/courses";
+    }
+
+    @PostMapping("/course/{id}/comment")
+    public String comment(@PathVariable Long id, CommentRequest commentRequest) {
+        courseService.comment(id, commentRequest);
+
+        return "redirect:/course/" + id;
     }
 }

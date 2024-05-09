@@ -1,10 +1,8 @@
 package com.takdanai.courseware.entities;
 
 import com.google.common.collect.Lists;
-import com.takdanai.courseware.controllers.payload.requests.CourseRequest;
 import com.takdanai.courseware.entities.base.BaseEntity;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -51,9 +49,12 @@ public class Course extends BaseEntity implements Serializable {
     @Enumerated(EnumType.ORDINAL)
     private Status status;
 
-    @Valid
     @JoinColumn(name = "course_id")
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Comment> comments = Lists.newLinkedList();
+
+    @JoinColumn(name = "course_id")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Lecture> lectures = Lists.newLinkedList();
 
     public static Type[] types() {
@@ -72,16 +73,20 @@ public class Course extends BaseEntity implements Serializable {
         lectures.remove(lectureIndex.intValue());
     }
 
-    public static Course formRequest(CourseRequest request) {
-        Course course = new Course();
-
-        return course;
+    public String getPath() {
+        return String.format("/course/%d", this.getId());
     }
 
     public enum Level {
-        UNDERGRADUATE,
-        GRADUATE,
-        HIGH_SCHOOL;
+        UNDERGRADUATE("Undergraduate"),
+        GRADUATE("Graduate"),
+        HIGH_SCHOOL("High School");
+
+        public final String title;
+
+        Level(String title) {
+            this.title = title;
+        }
     }
 
     public enum Type {
@@ -96,8 +101,14 @@ public class Course extends BaseEntity implements Serializable {
     }
 
     public enum Status {
-        DRAFT,
-        PUBLISHED,
-        UNPUBLISHED
+        DRAFT("Draft"),
+        PUBLISHED("Published"),
+        UNPUBLISHED("Unpublished");
+
+        public final String title;
+
+        Status(String title) {
+            this.title = title;
+        }
     }
 }
