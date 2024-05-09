@@ -58,7 +58,7 @@ public class StorageService extends BaseService<StorageRepository, Storage> {
     }
 
     public Storage.Document saveDocument(MultipartFile file) throws IOException {
-        var storedFile = saveFileToLocalStorage(file);
+        var storedFile = saveFileToLocalStorage(file, "document");
 
         Storage.Document document = new Storage.Document();
         document.setFileName(storedFile.getFirst());
@@ -80,7 +80,7 @@ public class StorageService extends BaseService<StorageRepository, Storage> {
     }
 
     public Storage.Image saveImage(MultipartFile file) throws IOException {
-        var storedFile = saveFileToLocalStorage(file);
+        var storedFile = saveFileToLocalStorage(file, "image");
 
         Storage.Image image = new Storage.Image();
         image.setFileName(storedFile.getFirst());
@@ -102,7 +102,7 @@ public class StorageService extends BaseService<StorageRepository, Storage> {
     }
 
     public Storage.Video saveVideo(MultipartFile file) throws IOException {
-        var storedFile = saveFileToLocalStorage(file);
+        var storedFile = saveFileToLocalStorage(file, "video");
 
         Storage.Video video = new Storage.Video();
         video.setFileName(storedFile.getFirst());
@@ -126,9 +126,28 @@ public class StorageService extends BaseService<StorageRepository, Storage> {
         throw new RuntimeException("Could not read the file!");
     }
 
-    private Pair<String, String> saveFileToLocalStorage(MultipartFile file) throws IOException {
+    private Pair<String, String> saveFileToLocalStorage(MultipartFile file, String type) throws IOException {
         String newFileName = generateFileName(file.getOriginalFilename());
-        Path filePath = Paths.get(IMAGE_STORAGE_DIRECTORY, newFileName);
+        Path filePath;
+
+        switch (type) {
+            case "image": {
+                filePath = Paths.get(IMAGE_STORAGE_DIRECTORY, newFileName);
+            }
+
+            case "video": {
+                filePath = Paths.get(VIDEO_STORAGE_DIRECTORY, newFileName);
+            }
+
+            case "document": {
+                filePath = Paths.get(DOCUMENT_STORAGE_DIRECTORY, newFileName);
+            }
+
+            case null, default: {
+                filePath = Paths.get(STORAGE_DIRECTORY, newFileName);
+            }
+        }
+
         Files.write(filePath, file.getBytes());
 
         return Pair.of(newFileName, filePath.toString());
