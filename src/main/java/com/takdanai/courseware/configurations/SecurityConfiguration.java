@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -59,10 +60,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, RememberMeServices rememberMeServices) throws Exception {
         http
                 .formLogin(AbstractHttpConfigurer::disable)
-
-                .anonymous(anonymous -> {
-                    anonymous.authorities("GUEST");
-                })
+                .anonymous(Customizer.withDefaults())
                 .sessionManagement(session -> {
                     session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
                 })
@@ -70,9 +68,9 @@ public class SecurityConfiguration {
                     rememberMe.rememberMeServices(rememberMeServices);
                 })
                 .authorizeHttpRequests(registry -> {
-                    registry.requestMatchers("/authentication/**").permitAll();
-                    registry.requestMatchers("/", "/courses", "/course/").permitAll();
-                    registry.requestMatchers("/addLecture", "/removeLecture").permitAll();
+                    registry.requestMatchers("/", "/authentication/**").permitAll();
+                    registry.requestMatchers("/courses", "/course/**", "/addLecture", "/removeLecture").permitAll();
+                    registry.requestMatchers("/storages", "/storages/**").permitAll();
                     registry.anyRequest().authenticated();
                 });
 

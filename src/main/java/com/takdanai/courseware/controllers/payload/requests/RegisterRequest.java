@@ -20,19 +20,19 @@ import java.time.LocalDate;
 public class RegisterRequest extends PasswordConfirmationRequestInterface {
     @UsernameUnique
     @NotBlank(message = "Username cannot be blank")
-    private String username;
+    public String username;
 
     @NotBlank(message = "First name cannot be blank")
-    private String firstName;
+    public String firstName;
 
     @NotBlank(message = "Last name cannot be blank")
-    private String lastName;
+    public String lastName;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.TIME)
-    private LocalDate birthday;
-    private Gender gender;
-    private MultipartFile avatar;
-    private String bio;
+    public LocalDate birthday;
+    public Gender gender;
+    public MultipartFile avatar;
+    public String bio;
 
     public Gender[] genders() {
         return Gender.values();

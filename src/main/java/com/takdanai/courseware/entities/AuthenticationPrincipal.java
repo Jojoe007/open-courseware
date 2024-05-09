@@ -2,6 +2,7 @@ package com.takdanai.courseware.entities;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -9,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Getter
+@ToString
 @RequiredArgsConstructor
 public class AuthenticationPrincipal implements Authentication {
 
