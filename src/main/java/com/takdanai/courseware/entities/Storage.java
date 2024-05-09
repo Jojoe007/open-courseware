@@ -6,17 +6,25 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 @Data
 @Entity
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @DiscriminatorColumn(name = "storage_type")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-public class Storage extends BaseEntity {
+public class Storage extends BaseEntity implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private String fileName;
     private String path;
     private String type;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private Student uploadedBy;
 
     @Entity
@@ -24,6 +32,7 @@ public class Storage extends BaseEntity {
     public static class Document extends Storage {
 
     }
+
     @Entity
     @DiscriminatorValue("IMAGE")
     public static class Image extends Storage {

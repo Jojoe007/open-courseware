@@ -8,7 +8,6 @@ import com.takdanai.courseware.repositories.VideoRepository;
 import com.takdanai.courseware.services.base.BaseService;
 import com.takdanai.courseware.utils.StorageUtils;
 import lombok.extern.log4j.Log4j2;
-import org.apache.kafka.common.errors.AuthenticationException;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.util.Pair;
@@ -30,17 +29,24 @@ public class StorageService extends BaseService<StorageRepository, Storage> {
     public static String DOCUMENT_STORAGE_DIRECTORY = STORAGE_DIRECTORY + "/documents";
     public static String IMAGE_STORAGE_DIRECTORY = STORAGE_DIRECTORY + "/images";
     public static String VIDEO_STORAGE_DIRECTORY = STORAGE_DIRECTORY + "/videos";
-    private final AuthenticationService authenticationService;
     private final DocumentRepository documentRepository;
     private final ImageRepository imageRepository;
     private final VideoRepository videoRepository;
 
-    protected StorageService(StorageRepository repository, AuthenticationService authenticationService, DocumentRepository documentRepository, ImageRepository imageRepository, VideoRepository videoRepository) {
+    protected StorageService(StorageRepository repository, DocumentRepository documentRepository, ImageRepository imageRepository, VideoRepository videoRepository) {
         super(repository);
-        this.authenticationService = authenticationService;
         this.documentRepository = documentRepository;
         this.imageRepository = imageRepository;
         this.videoRepository = videoRepository;
+    }
+
+    @Override
+    public Optional<Storage> findById(Long id) {
+        return super.findById(id);
+    }
+
+    public Optional<Storage> findByFileName(String fileName) {
+        return repository.findByFileName(fileName);
     }
 
     public Optional<Storage.Document> findDocumentById(Long id) {
@@ -58,8 +64,9 @@ public class StorageService extends BaseService<StorageRepository, Storage> {
         document.setFileName(storedFile.getFirst());
         document.setPath(storedFile.getSecond());
         document.setType(file.getContentType());
-        document.setUploadedBy(authenticationService.getCurrentStudent()
-                .orElseThrow(() -> new AuthenticationException("Require login to upload image.")));
+//        document.setUploadedBy(AuthenticationHelper.getPrincipal());
+//        document.setUploadedBy(authenticationService.getCurrentStudent()
+//                .orElseThrow(() -> new AuthenticationException("Require login to upload image.")));
 
         return repository.save(document);
     }
@@ -79,8 +86,9 @@ public class StorageService extends BaseService<StorageRepository, Storage> {
         image.setFileName(storedFile.getFirst());
         image.setPath(storedFile.getSecond());
         image.setType(file.getContentType());
-        image.setUploadedBy(authenticationService.getCurrentStudent()
-                .orElseThrow(() -> new AuthenticationException("Require login to upload image.")));
+//        image.setUploadedBy(AuthenticationHelper.getPrincipal());
+//        image.setUploadedBy(authenticationService.getCurrentStudent()
+//                .orElseThrow(() -> new AuthenticationException("Require login to upload image.")));
 
         return repository.save(image);
     }
@@ -100,8 +108,9 @@ public class StorageService extends BaseService<StorageRepository, Storage> {
         video.setFileName(storedFile.getFirst());
         video.setPath(storedFile.getSecond());
         video.setType(file.getContentType());
-        video.setUploadedBy(authenticationService.getCurrentStudent()
-                .orElseThrow(() -> new AuthenticationException("Require login to upload video.")));
+//        video.setUploadedBy(AuthenticationHelper.getPrincipal());
+//        video.setUploadedBy(authenticationService.getCurrentStudent()
+//                .orElseThrow(() -> new AuthenticationException("Require login to upload video.")));
 
         return repository.save(video);
     }
@@ -118,14 +127,11 @@ public class StorageService extends BaseService<StorageRepository, Storage> {
     }
 
     private Pair<String, String> saveFileToLocalStorage(MultipartFile file) throws IOException {
-        StringBuilder fileName = new StringBuilder();
         String newFileName = generateFileName(file.getOriginalFilename());
-
         Path filePath = Paths.get(IMAGE_STORAGE_DIRECTORY, newFileName);
-        fileName.append(filePath);
         Files.write(filePath, file.getBytes());
 
-        return Pair.of(fileName.toString(), filePath.toString());
+        return Pair.of(newFileName, filePath.toString());
     }
 
     private String generateFileName(String oldName) {
