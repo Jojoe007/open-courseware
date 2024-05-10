@@ -24,7 +24,7 @@ public class Storage extends BaseEntity implements Serializable {
     private String path;
     private String type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Student uploadedBy;
 
     @Entity

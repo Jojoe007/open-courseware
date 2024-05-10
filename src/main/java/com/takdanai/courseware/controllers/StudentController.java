@@ -3,7 +3,8 @@ package com.takdanai.courseware.controllers;
 import com.takdanai.courseware.entities.Student;
 import com.takdanai.courseware.exceptions.StudentNotFoundException;
 import com.takdanai.courseware.services.StudentService;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.security.Principal;
 
 @Controller
-public record StudentController(StudentService studentService) {
+public class StudentController {
+
+    private final StudentService studentService;
+
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
     @GetMapping("/students")
     public String index(Model model) {
@@ -30,10 +37,10 @@ public record StudentController(StudentService studentService) {
     }
 
     @GetMapping("/me")
+    @PreAuthorize("isAuthenticated()")
     public String me(Model model, Principal principal) {
-        UsernamePasswordAuthenticationToken authenticationToken = (UsernamePasswordAuthenticationToken) principal;
-        Student student = (Student) authenticationToken.getPrincipal();
-        System.out.println(authenticationToken.getCredentials());
+        Student student = studentService.findByUsername(principal.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("me not found."));
 
         model.addAttribute("student", student);
 

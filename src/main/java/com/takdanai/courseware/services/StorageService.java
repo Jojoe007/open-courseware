@@ -12,6 +12,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -79,6 +80,7 @@ public class StorageService extends BaseService<StorageRepository, Storage> {
         return imageRepository.findByFileName(fileName);
     }
 
+    @Transactional
     public Storage.Image saveImage(MultipartFile file) throws IOException {
         var storedFile = saveFileToLocalStorage(file, "image");
 
@@ -128,33 +130,36 @@ public class StorageService extends BaseService<StorageRepository, Storage> {
 
     private Pair<String, String> saveFileToLocalStorage(MultipartFile file, String type) throws IOException {
         String newFileName = generateFileName(file.getOriginalFilename());
-        String storeFilePath = "/storages";
+        String storeFilePath;
         Path realFilePath;
 
         switch (type) {
             case "image": {
                 realFilePath = Paths.get(IMAGE_STORAGE_DIRECTORY, newFileName);
-                storeFilePath += "/images/" + newFileName;
+                storeFilePath = "/storages/images/" + newFileName;
+                break;
             }
 
             case "video": {
                 realFilePath = Paths.get(VIDEO_STORAGE_DIRECTORY, newFileName);
-                storeFilePath += "/videos/" + newFileName;
+                storeFilePath = "/storages/videos/" + newFileName;
+                break;
             }
 
             case "document": {
                 realFilePath = Paths.get(DOCUMENT_STORAGE_DIRECTORY, newFileName);
-                storeFilePath += "/documents/" + newFileName;
+                storeFilePath = "/storages/documents/" + newFileName;
+                break;
             }
 
-            case null, default: {
+            default: {
                 realFilePath = Paths.get(STORAGE_DIRECTORY, newFileName);
-                storeFilePath += newFileName;
+                storeFilePath = newFileName;
+                break;
             }
         }
 
         Files.write(realFilePath, file.getBytes());
-
         return Pair.of(newFileName, storeFilePath);
     }
 

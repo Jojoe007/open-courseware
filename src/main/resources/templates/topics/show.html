@@ -9,9 +9,9 @@
     <th:block th:fragment="content">
         <a href="/topics">Back</a>
         <h1 th:text="${topic.title}"></h1>
-        <th:block th:each="subTopic : ${subTopics}">
-            <a th:href="@{'/topic/' + ${topic.id} + '/subs/' + ${subTopic.id}}"><strong
-                    th:text="${subTopic.title}"></strong></a>
+        <th:block th:each="course : ${topic.course}">
+            <a th:href="@{''}"><strong
+                    th:text="${course.title}"></strong></a>
         </th:block>
     </th:block>
 

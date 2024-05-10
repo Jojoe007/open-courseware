@@ -50,4 +50,8 @@ public class StudentService extends BaseService<StudentRepository, Student> impl
         return repository.findByUsername(username.toLowerCase())
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("%s not found.", username)));
     }
+
+    public Optional<Student> findByUsername(String username) {
+        return repository.findByUsername(username);
+    }
 }

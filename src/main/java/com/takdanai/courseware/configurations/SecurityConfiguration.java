@@ -4,6 +4,7 @@ import com.takdanai.courseware.services.StudentService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -68,9 +69,16 @@ public class SecurityConfiguration {
                     rememberMe.rememberMeServices(rememberMeServices);
                 })
                 .authorizeHttpRequests(registry -> {
-                    registry.requestMatchers("/", "/authentication/**").permitAll();
-                    registry.requestMatchers("/courses", "/course/**", "/addLecture", "/removeLecture").permitAll();
+                    registry.requestMatchers("/", "/css/**", "/js/**", "/images/**", "/storages/**").permitAll();
+                    registry.requestMatchers("/authentication/login", "authentication/register").anonymous();
+                    registry.requestMatchers("/authentication/logout").authenticated();
+
+                    registry.requestMatchers("/courses", "/course/**", "/topics", "topic/**", "/departments", "/department/**").permitAll();
+                    registry.requestMatchers(HttpMethod.POST, "/course", "/addLecture", "/removeLecture").authenticated();
+
                     registry.requestMatchers("/storages", "/storages/**").permitAll();
+
+                    registry.requestMatchers("/students", "/student/**").permitAll();
                     registry.anyRequest().authenticated();
                 });
 

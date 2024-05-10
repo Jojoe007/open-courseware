@@ -1,7 +1,7 @@
 <template lang="en"
           xmlns="http://www.w3.org/1999/xhtml"
           xmlns:th="http://www.thymeleaf.org"
-          th:replace="layouts/application :: layout(~{::title},~{::main}, ~{::script})">
+          th:replace="~{layouts/application :: layout(~{::title},~{::main}, ~{::script})}">
     <title th:text="${student.fullName}">Student Name</title>
 
     <main>
@@ -11,11 +11,11 @@
                     <div class="col-3 ps-5">
                         <!-- https://dummyimage.com/200x200 -->
                         <img class="rounded-circle" th:if="${student.avatar}"
-                             th:src="@{'/storages/images/' + ${student.avatar.fileName}}" alt="avatar" width="200"
-                             height="200">
+                             th:src="${student.avatar.path}" alt="avatar" width="200"
+                             height="200" style="object-fit: cover">
                     </div>
                     <div class="col-4">
-                        <div class="pt-5 ">
+                        <div class="pt-5">
                             <h3 th:text="${student.fullName()}"></h3>
                         </div>
                         <div class="pt-2">

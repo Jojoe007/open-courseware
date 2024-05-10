@@ -3,7 +3,7 @@ spring:
     name: open-courseware
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
   sql:
     init:
       mode: always
@@ -22,9 +22,6 @@ spring:
       max-file-size: 200MB
       max-request-size: 200MB
       location: classpath*:/storages
-  batch:
-    jdbc:
-      initialize-schema: always
   mvc:
     hiddenmethod:
       filter:

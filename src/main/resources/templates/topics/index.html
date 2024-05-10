@@ -1,7 +1,7 @@
 <template lang="en"
           xmlns="http://www.w3.org/1999/xhtml"
           xmlns:th="http://www.thymeleaf.org"
-          th:replace="layouts/application :: layout(~{::title},~{::main}, ~{::script})">
+          th:replace="~{layouts/application :: layout(~{::title},~{::main}, ~{::script})}">
     <title>Topics</title>
     <main>
         <div class="row py-5">
