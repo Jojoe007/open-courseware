@@ -32,13 +32,13 @@ public class CourseService extends BaseService<CourseRepository, Course> {
 
     private final DepartmentRepository departmentRepository;
 
-    private final TopicRepository<Topic> topicRepository;
+    private final TopicRepository topicRepository;
 
     private final StorageService storageService;
 
     protected CourseService(CourseRepository repository, AuthenticationService authenticationService, CommentRepository commentRepository,
                             LectureService lectureService, DepartmentRepository departmentRepository,
-                            TopicRepository<Topic> topicRepository, StorageService storageService) {
+                            TopicRepository topicRepository, StorageService storageService) {
         super(repository);
         this.authenticationService = authenticationService;
         this.commentRepository = commentRepository;
@@ -144,15 +144,7 @@ public class CourseService extends BaseService<CourseRepository, Course> {
         return topicRepository.findAll();
     }
 
-    public List<Topic> allMainTopics() {
-        return topicRepository.findTopicsByType(Topic.Type.MAIN);
-    }
-
     public Optional<Topic> findTopicById(Long id) {
         return topicRepository.findById(id);
-    }
-
-    public List<Topic.Sub> findByMainTopicId(Long mainTopicId) {
-        return topicRepository.findByMainTopicId(mainTopicId);
     }
 }

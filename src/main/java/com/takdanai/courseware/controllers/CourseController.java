@@ -6,6 +6,8 @@ import com.takdanai.courseware.entities.Course;
 import com.takdanai.courseware.exceptions.CourseNotFoundException;
 import com.takdanai.courseware.services.CourseService;
 import jakarta.validation.Valid;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,8 +16,14 @@ import org.springframework.web.bind.annotation.*;
 //@RestController
 @Controller
 @RequestMapping
-public record CourseController(CourseService courseService) {
+public class CourseController {
     // TODO: Making pagination for pageable and sorting.
+
+    private final CourseService courseService;
+
+    public CourseController(CourseService courseService) {
+        this.courseService = courseService;
+    }
 
     @GetMapping("/courses")
     public String index(Model model) {
@@ -36,7 +44,9 @@ public record CourseController(CourseService courseService) {
         return "courses/show";
     }
 
+
     @GetMapping("/course")
+    @PreAuthorize("isAuthenticated()")
     public String news(Model model) {
         model.addAttribute("courseRequest", new CourseRequest());
         model.addAttribute("topics", courseService.allTopics());
@@ -46,8 +56,9 @@ public record CourseController(CourseService courseService) {
     }
 
     @PostMapping(value = "/addLecture")
+    @PreAuthorize("isAuthenticated()")
     public String addLecture(CourseRequest courseRequest) {
-        if (courseRequest.lectures.size() <= 15) {
+        if (courseRequest.lectures.size() <= 16) {
             courseRequest.addLecture();
         }
 
@@ -55,6 +66,7 @@ public record CourseController(CourseService courseService) {
     }
 
     @PostMapping("/removeLecture")
+    @PreAuthorize("isAuthenticated()")
     public String removeLecture(CourseRequest courseRequest, @RequestParam("removeLecture") Integer lectureIndex) {
         courseRequest.removeLecture(lectureIndex);
 
@@ -62,8 +74,11 @@ public record CourseController(CourseService courseService) {
     }
 
     @PostMapping("/course")
-    public String create(@Valid CourseRequest courseRequest, BindingResult bindingResult) {
+    @PreAuthorize("isAuthenticated()")
+    public String create(@Valid CourseRequest courseRequest, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("topics", courseService.allTopics());
+            model.addAttribute("departments", courseService.allDepartments());
             return "courses/new";
         }
 
@@ -71,8 +86,10 @@ public record CourseController(CourseService courseService) {
         return "redirect:/courses";
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/course/{id}/comment")
-    public String comment(@PathVariable Long id, CommentRequest commentRequest) {
+    public String comment(@PathVariable Long id, CommentRequest commentRequest, UsernamePasswordAuthenticationToken authenticationToken) {
+        System.out.println(authenticationToken.getPrincipal());
         courseService.comment(id, commentRequest);
 
         return "redirect:/course/" + id;

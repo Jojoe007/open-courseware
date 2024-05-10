@@ -28,10 +28,20 @@ public class Course extends BaseEntity implements Serializable {
 
     private String overview;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "course_topics",
+            joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "topic_id", referencedColumnName = "id")
+    )
     private Set<Topic> topics = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "course_departments",
+            joinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "department_id", referencedColumnName = "id")
+    )
     private Set<Department> departments = new HashSet<>();
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -50,12 +60,16 @@ public class Course extends BaseEntity implements Serializable {
     private Status status;
 
     @JoinColumn(name = "course_id")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Lecture> lectures = Lists.newLinkedList();
+
+    @JoinColumn(name = "course_id")
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Comment> comments = Lists.newLinkedList();
 
     @JoinColumn(name = "course_id")
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Lecture> lectures = Lists.newLinkedList();
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Rating> ratings = Lists.newLinkedList();
 
     public static Type[] types() {
         return Type.values();
