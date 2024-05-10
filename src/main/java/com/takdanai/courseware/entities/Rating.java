@@ -1,21 +1,30 @@
 package com.takdanai.courseware.entities;
 
 import com.takdanai.courseware.entities.base.BaseEntity;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
+import lombok.*;
 
+import java.io.Serial;
+import java.io.Serializable;
+
+@Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Rating extends BaseEntity {
+public class Rating extends BaseEntity implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Enumerated(EnumType.ORDINAL)
     private RatingValue value;
+
+    @ManyToOne
+    private Student student;
 
     @Getter
     public enum RatingValue {

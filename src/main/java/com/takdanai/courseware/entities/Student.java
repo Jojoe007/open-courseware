@@ -37,9 +37,11 @@ public class Student extends BaseEntity implements UserDetails, Serializable {
     @Column(nullable = false)
     private String password;
 
+    @Enumerated(EnumType.ORDINAL)
     private Role role = Role.ROLE_USER;
 
     private String firstName;
+
     private String lastName;
 
     private LocalDate birthday;
@@ -47,26 +49,19 @@ public class Student extends BaseEntity implements UserDetails, Serializable {
     @Enumerated(EnumType.ORDINAL)
     private Gender gender;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Storage.Image avatar;
+
     private String bio;
 
     public String fullName() {
         return String.format("%s %s", this.firstName, this.lastName);
     }
 
-    public String getPath() {
-        return String.format("/student/%d", this.getId());
-    }
-
-    public static List<Gender> genders() {
-        return List.of(Gender.values());
-    }
-
     @Override
     @Transient
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override

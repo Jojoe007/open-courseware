@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<template lang="en"
-          xmlns="http://www.w3.org/1999/xhtml"
+<template xmlns="http://www.w3.org/1999/xhtml"
           xmlns:th="http://www.thymeleaf.org"
-          th:replace="layouts/application :: layout(~{::title},~{::main}, ~{::script})">
+          xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+          th:replace="~{layouts/application :: layout(~{::title},~{::main}, ~{::script})}">
     <title>Hello</title>
     <main>
-
         <div>
-            <a th:href="@{/course}"><strong>Create Course</strong></a>
+            <div sec:authorize="isAuthenticated()">
+                <a th:href="@{/course}"><strong>Create Course</strong></a>
+            </div>
             <h1>Course Lists</h1>
             <ul>
                 <li th:each="course : ${ courses}">
@@ -15,54 +16,8 @@
                 </li>
             </ul>
         </div>
-
     </main>
     <script>
 
     </script>
 </template>
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en"-->
-<!--      xmlns="http://www.w3.org/1999/xhtml"-->
-<!--      xmlns:th="http://www.thymeleaf.org"-->
-<!--      th:replace="~{layouts/application :: layout(~{::title}, ~{::content}, ~{::script})}">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Hello</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<th:block th:fragment="content">-->
-<!--    <div>Open Courseware Index</div>-->
-<!--    <th:block th:if="${#authentication.authenticated}">-->
-<!--        <div>isAuthenticate</div>-->
-<!--        <div th:text="${#authentication.principal}"></div>-->
-<!--        <a th:href="@{/course}">Create Course</a>-->
-<!--        <form action="" th:action="@{/authentication/logout}" th:method="delete">-->
-<!--            <button type="submit">Logout</button>-->
-<!--        </form>-->
-<!--    </th:block>-->
-<!--</th:block>-->
-<!--<script>-->
-
-<!--</script>-->
-<!--</body>-->
-<!--</html>-->
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en"-->
-<!--      xmlns="http://www.w3.org/1999/xhtml"-->
-<!--      xmlns:th="http://www.thymeleaf.org">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Courses</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<a th:href="@{/course}">Create Course</a>-->
-<!--<ul>-->
-<!--    <li th:each="course : ${ courses}">-->
-<!--        <p th:text="${course.title}"></p>-->
-<!--    </li>-->
-<!--</ul>-->
-<!--</body>-->
-<!--</html>-->

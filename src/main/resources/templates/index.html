@@ -2,11 +2,11 @@
 <template lang="en"
           xmlns="http://www.w3.org/1999/xhtml"
           xmlns:th="http://www.thymeleaf.org"
-          th:replace="layouts/application :: layout(~{::title},~{::main}, ~{::script})">
-    <title>Hello</title>
+          th:replace="~{layouts/application :: layout(~{::title},~{::main}, ~{::script})}">
+    <title>Home - OCW</title>
     <main>
 
-        <header th:replace="fragments/header.html :: header"></header>
+        <header th:replace="partials/header.html :: header"></header>
 
         <div>
             <div class="row-1">
@@ -18,35 +18,15 @@
                                 </button>
                             </div>
                         </th:block>
-                        <!--                    <div class="col-2 me-1">-->
-                        <!--                        <button type="button" class="btn btn-primary  w-75">All</button>-->
-                        <!--                    </div>-->
-                        <!--                    <div class="col-2 me-1">-->
-                        <!--                        <button type="button" class="btn btn-primary  w-75">Technology</button>-->
-                        <!--                    </div>-->
-                        <!--                    <div class="col-2 me-1">-->
-                        <!--                        <button type="button" class="btn btn-primary  w-75">Math</button>-->
-                        <!--                    </div>-->
-                        <!--                    <div class="col-2 me-1">-->
-                        <!--                        <button type="button" class="btn btn-primary w-75">Science</button>-->
-                        <!--                    </div>-->
-                        <!--                    <div class="col-2 me-1">-->
-                        <!--                        <button type="button" class="btn btn-primary  w-75">English</button>-->
-                        <!--                    </div>-->
-                        <!--                    <div class="col-2 me-1">-->
-                        <!--                        <button type="button" class="btn btn-primary  w-75">Thai</button>-->
-                        <!--                    </div>-->
                     </div>
                 </div>
-
-                <!--            <div class="container-fluid">-->
                 <div class="pt-5 row">
                     <th:block th:each="course : ${courses}">
                         <div class="col-4">
                             <a th:href="${course.path}">
                                 <div class="card" style="width: 25rem;">
                                     <img class="card-img-top"
-                                         th:src="@{'/storages/images/' + ${course.thumbnail.fileName}}"
+                                         th:src="${course.thumbnail.path}"
                                          alt="" width="400" height="100" style="object-fit: cover">
                                     <div class="card-body">
                                         <div class="row">
@@ -66,97 +46,6 @@
                             </a>
                         </div>
                     </th:block>
-                    <!--                    <div class="col-4">-->
-                    <!--                        <a href="/video">-->
-                    <!--                            <div class="card" style="width: 25rem;">-->
-                    <!--                                <img class="card-img-top" src="https://dummyimage.com/400x180">-->
-                    <!--                                <div class="card-body">-->
-                    <!--                                    <div class="row">-->
-                    <!--                                        <div class="col-2">-->
-                    <!--                                            <img class="rounded-circle" src="https://dummyimage.com/50x50">-->
-                    <!--                                        </div>-->
-                    <!--                                        <div class="col">-->
-                    <!--                                            <h5 class="card-text">Spring boot + thymeleaf.</h5>-->
-                    <!--                                            <h6 class="card-text">peter</h6>-->
-                    <!--                                        </div>-->
-                    <!--                                    </div>-->
-                    <!--                                </div>-->
-                    <!--                            </div>-->
-                    <!--                        </a>-->
-                    <!--                    </div>-->
-                    <!--                    <div class="col-4">-->
-                    <!--                        <a href="/video">-->
-                    <!--                            <div class="card" style="width: 25rem;">-->
-                    <!--                                <img class="card-img-top" src="https://dummyimage.com/400x180">-->
-                    <!--                                <div class="card-body">-->
-                    <!--                                    <div class="row">-->
-                    <!--                                        <div class="col-2">-->
-                    <!--                                            <img class="rounded-circle" src="https://dummyimage.com/50x50">-->
-                    <!--                                        </div>-->
-                    <!--                                        <div class="col">-->
-                    <!--                                            <h5 class="card-text">Spring boot + thymeleaf.</h5>-->
-                    <!--                                            <h6 class="card-text">peter</h6>-->
-                    <!--                                        </div>-->
-                    <!--                                    </div>-->
-                    <!--                                </div>-->
-                    <!--                            </div>-->
-                    <!--                        </a>-->
-                    <!--                    </div>-->
-                    <!--                </div>-->
-                    <!--            </div>-->
-
-                    <!--            <div class="container-fluid">-->
-                    <!--                <div class="pt-5 row">-->
-                    <!--                    <div class="col-4">-->
-                    <!--                        <div class="card" style="width: 25rem;">-->
-                    <!--                            <img class="card-img-top" src="https://dummyimage.com/400x180">-->
-                    <!--                            <div class="card-body">-->
-                    <!--                                <div class="row">-->
-                    <!--                                    <div class="col-2">-->
-                    <!--                                        <img class="rounded-circle" src="https://dummyimage.com/50x50">-->
-                    <!--                                    </div>-->
-                    <!--                                    <div class="col">-->
-                    <!--                                        <h5 class="card-text">Spring boot + thymeleaf.</h5>-->
-                    <!--                                        <h6 class="card-text">peter</h6>-->
-                    <!--                                    </div>-->
-                    <!--                                </div>-->
-                    <!--                            </div>-->
-                    <!--                        </div>-->
-                    <!--                    </div>-->
-                    <!--                    <div class="col-4">-->
-                    <!--                        <div class="card" style="width: 25rem;">-->
-                    <!--                            <img class="card-img-top" src="https://dummyimage.com/400x180">-->
-                    <!--                            <div class="card-body">-->
-                    <!--                                <div class="row">-->
-                    <!--                                    <div class="col-2">-->
-                    <!--                                        <img class="rounded-circle" src="https://dummyimage.com/50x50">-->
-                    <!--                                    </div>-->
-                    <!--                                    <div class="col">-->
-                    <!--                                        <h5 class="card-text">Spring boot + thymeleaf.</h5>-->
-                    <!--                                        <h6 class="card-text">peter</h6>-->
-                    <!--                                    </div>-->
-                    <!--                                </div>-->
-                    <!--                            </div>-->
-                    <!--                        </div>-->
-                    <!--                    </div>-->
-                    <!--                    <div class="col-4">-->
-                    <!--                        <div class="card" style="width: 25rem;">-->
-                    <!--                            <img class="card-img-top" src="https://dummyimage.com/400x180">-->
-                    <!--                            <div class="card-body">-->
-                    <!--                                <div class="row">-->
-                    <!--                                    <div class="col-2">-->
-                    <!--                                        <img class="rounded-circle" src="https://dummyimage.com/50x50">-->
-                    <!--                                    </div>-->
-                    <!--                                    <div class="col">-->
-                    <!--                                        <h5 class="card-text">Spring boot + thymeleaf.</h5>-->
-                    <!--                                        <h6 class="card-text">peter</h6>-->
-                    <!--                                    </div>-->
-                    <!--                                </div>-->
-                    <!--                            </div>-->
-                    <!--                        </div>-->
-                    <!--                    </div>-->
-                    <!--                </div>-->
-                    <!--            </div>-->
                 </div>
             </div>
         </div>
@@ -165,30 +54,3 @@
 
     </script>
 </template>
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en"-->
-<!--      xmlns="http://www.w3.org/1999/xhtml"-->
-<!--      xmlns:th="http://www.thymeleaf.org"-->
-<!--      th:replace="~{layouts/application :: layout(~{::title}, ~{::content}, ~{::script})}">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title>Hello</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<th:block th:fragment="content">-->
-<!--    <div>Open Courseware Index</div>-->
-<!--    <th:block th:if="${#authentication.authenticated}">-->
-<!--        <div>isAuthenticate</div>-->
-<!--        <div th:text="${#authentication.principal}"></div>-->
-<!--        <a th:href="@{/course}">Create Course</a>-->
-<!--        <form action="" th:action="@{/authentication/logout}" th:method="delete">-->
-<!--            <button type="submit">Logout</button>-->
-<!--        </form>-->
-<!--    </th:block>-->
-<!--</th:block>-->
-<!--<script>-->
-
-<!--</script>-->
-<!--</body>-->
-<!--</html>-->

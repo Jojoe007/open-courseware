@@ -1,0 +1,64 @@
+<template lang="en"
+          xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:th="http://www.thymeleaf.org"
+>
+    <nav class="navbar bg-primary sticky-top" th:fragment="topnav">
+        <div class="container justify-content-between py-2 ">
+
+            <div class="nav justify-content-start items-center gap-2">
+                <a href="/" class="navbar-brand text-light">Open Courseware</a>
+                <div class="nav-item">
+                    <a class="nav-link text-light" href="/courses">
+                        Course
+                    </a>
+                </div>
+
+                <div class="nav-item">
+                    <a class="nav-link text-light" href="/topics">
+                        Topics
+                    </a>
+                </div>
+            </div>
+
+            <div class="nav justify-content-end gap-2">
+                <th:block th:switch="${#authentication.principal}">
+                    <th:block th:case="'anonymousUser'">
+                        <div class="nav-item">
+                            <a href="/authentication/login" class="btn btn-light">Login</a>
+                        </div>
+
+                        <div class="nav-item">
+                            <a href="/authentication/register" class="btn btn-light">Register</a>
+                        </div>
+                    </th:block>
+
+                    <th:block th:case="*">
+                        <div class="nav-item">
+                            <a class="btn btn-light" href="/course">
+                                Create-Course
+                            </a>
+                        </div>
+                        <div class="nav-item dropdown">
+                            <a class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                               aria-haspopup="true" aria-expanded="false"
+                               th:text="${#authentication.principal.fullName}">Dropdown</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="/me">Profiles</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                                <div class="dropdown-divider"></div>
+                                <form id="logout" th:action="@{/authentication/logout}" th:method="delete">
+                                    <a class="dropdown-item" type="submit"
+                                       href="javascript:$('#logout').submit()">Logout</a>
+                                </form>
+                            </div>
+                        </div>
+                        <!--                        <div class="nav-item">-->
+                        <!--                            -->
+                        <!--                        </div>-->
+                    </th:block>
+                </th:block>
+            </div>
+        </div>
+    </nav>
+</template>

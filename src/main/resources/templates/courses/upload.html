@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      th:replace="layouts/application :: layout(~{::title},~{::main}, ~{::script})">
+      th:replace="~{layouts/application :: layout(~{::title},~{::main}, ~{::script})}">
 <head>
     <meta charset="UTF-8">
     <title>Hello</title>
@@ -10,7 +10,7 @@
 <body>
 <main>
 
-    <header th:replace="fragments/header.html :: header"></header>
+    <header th:replace="partials/header.html :: header"></header>
 
     <div class="pt-5">
         <div class="ps-5 pt-5">

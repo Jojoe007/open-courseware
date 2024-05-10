@@ -8,53 +8,78 @@
     <content>
         <div class="py-5">
             <div class="row-1">
-                <div class="col pt-3">
-                    <div class="d-flex flex-row mt-4 ms-4">
-                        <div class="col-2 me-1">
-                            <button type="button" class="btn btn-primary w-75">All</button>
-                        </div>
-                        <div class="col-2 me-1">
-                            <button type="button" class="btn btn-primary w-75">Technology</button>
-                        </div>
-                        <div class="col-2 me-1">
-                            <button type="button" class="btn btn-primary w-75">Math</button>
-                        </div>
-                        <div class="col-2 me-1">
-                            <button type="button" class="btn btn-primary w-75">Science</button>
-                        </div>
-                        <div class="col-2 me-1">
-                            <button type="button" class="btn btn-primary w-75">English</button>
-                        </div>
-                        <div class="col-2 me-1">
-                            <button type="button" class="btn btn-primary w-75">Thai</button>
-                        </div>
-                    </div>
-                </div>
-
-
                 <div class="container-fluid">
                     <div class="pt-4">
-                        <video width="1280" height="640" controls>
-                            <source th:src="@{'/storages/images/' + ${course.lectures[0].video.fileName}}"
-                                    th:type="${course.lectures[0].video.type}">
-                        </video>
+                        <ul class="nav nav-tabs mb-2" id="myTab" role="tablist">
+                            <th:block th:each="lecture, rowStat : ${course.lectures}">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" th:classappend="${rowStat.first ? 'active' : ''}"
+                                            data-bs-toggle="tab"
+                                            th:data-bs-target="'#' + lecture- + ${lecture.index} + -tab" type="button"
+                                            role="tab" aria-selected="true" th:text="${lecture.topic}"></button>
+                                </li>
+                            </th:block>
+                        </ul>
+                        <div class="tab-content" id="myTabContent">
+                            <th:block th:each="lecture, rowStat : ${course.lectures}">
+                                <div class="tab-pane fade" th:classappend="${rowStat.first} ? 'show active' : ''"
+                                     th:id="lecture- + ${lecture.index} + -tab" role="tabpanel"
+                                     th:tabindex="${lecture.index}">
+                                    <div>
+                                        <h3 th:text="${lecture.topic}"></h3>
+                                        <p th:text="${lecture.summary}"></p>
+                                        <a th:href="${lecture.document.path}">Download PDF</a>
+                                    </div>
+                                    <video width="1280" height="640" controls>
+                                        <source th:src="${lecture.video.path}"
+                                                th:type="${lecture.video.type}">
+                                    </video>
+
+                                </div>
+                            </th:block>
+                        </div>
                     </div>
 
                     <div class="pt-4">
-                        <div class="row ">
+                        <div class="row">
                             <div class="col-1">
                                 <img class="rounded-circle"
-                                     th:src="@{'/storages/images/' + ${course.student.avatar.fileName}}" alt=""
+                                     th:src="${course.student.avatar.path}" alt=""
                                      width="75" height="75">
                             </div>
-                            <div class="col-4">
+                            <div class="col-3">
                                 <h3 th:text="${course.title}"></h3>
                                 <h5 th:text="${course.student.fullName}">>peter</h5>
                             </div>
-                            <div class="col-4 ">
+
+                            <div class="col">
                                 <button type="button" class="btn btn-primary w-25">Follow</button>
                             </div>
                         </div>
+
+                        <div class="col pt-4">
+                            <div class="col">
+                                <h4>Course Overview</h4>
+                                <p th:text="${course.overview}"></p>
+                            </div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <h6>Course Topics</h6>
+                                    <th:block th:each="topic : ${course.topics}">
+                                        <p th:text="${topic.title}"></p>
+                                    </th:block>
+                                </div>
+
+                                <div class="col">
+                                    <h6>Course Departments</h6>
+                                    <th:block th:each="department : ${course.departments}">
+                                        <p th:text="${department.title}"></p>
+                                    </th:block>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="pt-3">
                             <h3>Comment</h3>
                         </div>
@@ -70,13 +95,12 @@
                                 <div class="row pt-4">
                                     <div class="col-1 ">
                                         <img class="rounded-circle"
-                                             th:src="@{'/storages/images/' + ${comment.student.avatar.fileName}}" alt=""
+                                             th:src="${comment.student.avatar.path}" alt=""
                                              width="75" height="75">
                                     </div>
                                     <div class="col">
                                         <h5 th:text="${comment.student.fullName}">Comment Owner</h5>
                                         <h6 th:text="${comment.body}">Comment Body</h6>
-
                                     </div>
                                 </div>
                             </th:block>
@@ -87,35 +111,8 @@
         </div>
     </content>
 
-    <script>
 
+    <script>
     </script>
 
 </template>
-
-<!--<!DOCTYPE html>-->
-<!--<html lang="en"-->
-<!--      xmlns="http://www.w3.org/1999/xhtml"-->
-<!--      xmlns:th="http://www.thymeleaf.org"-->
-<!--      th:replace="~{layouts/application :: layout(~{::title}, ~{::content}, ~{::script})}">-->
-<!--<head>-->
-<!--    <meta charset="UTF-8">-->
-<!--    <title th:href="${course.title}">Title</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<th:block th:fragment="content">-->
-<!--    <img th:src="@{'/storages/images/' + ${course.thumbnail.fileName}}" alt="" width="200">-->
-<!--    <div class="row">-->
-<!--        <h2 th:text="${course.title}"></h2>-->
-<!--        <p th:text="${course.overview}"></p>-->
-<!--    </div>-->
-
-<!--    <video controls>-->
-<!--        <source th:src="@{'/storages/images/' + ${course.lectures[0].video.fileName}}" th:type="${course.lectures[0].video.type}">-->
-<!--    </video>-->
-<!--</th:block>-->
-<!--<script>-->
-
-<!--</script>-->
-<!--</body>-->
-<!--</html>-->
